@@ -19,11 +19,13 @@
             --primary: #0f766e;
             --primary-hover: #115e59;
             --accent: #f59e0b;
-            --bg-body: #f1f5f9; /* لون خلفية أفتح قليلاً */
+            --bg-body: #f1f5f9;
             --bg-card: #ffffff;
+            --bg-outer: #334155; /* لون الخلفية الخارجية للفراغ */
             --text-main: #1e293b;
             --text-light: #64748b;
-            --shadow: 0 1px 3px rgba(0,0,0,0.1); /* ظل خفيف بدلاً من الحدود */
+            --shadow: 0 1px 3px rgba(0,0,0,0.1);
+            --frame-shadow: 0 0 20px rgba(0,0,0,0.5); /* ظل للإطار الخارجي */
             --font-ui: 'Tajawal', sans-serif;
             --font-quran: 'Amiri', serif;
         }
@@ -35,6 +37,7 @@
             --accent: #fbbf24;
             --bg-body: #0f172a;
             --bg-card: #1e293b;
+            --bg-outer: #000000;
             --text-main: #f1f5f9;
             --text-light: #94a3b8;
             --shadow: 0 2px 5px rgba(0,0,0,0.3);
@@ -49,12 +52,24 @@
 
         body {
             font-family: var(--font-ui);
-            background-color: var(--bg-body);
-            color: var(--text-main);
+            background-color: var(--bg-outer); /* لون الفراغ حول التطبيق */
             min-height: 100vh;
             display: flex;
+            justify-content: center; /* توسيط التطبيق */
+            align-items: flex-start;
+        }
+
+        /* --- إطار التطبيق (50% من العرض) --- */
+        .mobile-frame {
+            width: 50%; /* تنفيذ طلبك: نصف العرض */
+            min-width: 320px; /* لضمان عدم اختفاء المحتوى في الشاشات الصغيرة جداً */
+            background-color: var(--bg-body);
+            min-height: 100vh;
+            position: relative;
+            display: flex;
             flex-direction: column;
-            overflow-x: hidden; /* منع الحركة الأفقية */
+            box-shadow: var(--frame-shadow);
+            overflow: hidden; /* لضمان عدم خروج المحتوى */
         }
 
         /* --- الهيدر --- */
@@ -98,10 +113,11 @@
         .nav-wrapper {
             background: var(--bg-card);
             position: sticky;
-            top: 55px;
+            top: 55px; /* أسفل الهيدر */
             z-index: 900;
             padding: 8px 0;
             box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            width: 100%;
         }
 
         .nav-scroller {
@@ -115,7 +131,7 @@
 
         .nav-btn {
             background: var(--bg-body);
-            border: none; /* حذف حدود الأزرار */
+            border: none;
             color: var(--text-light);
             padding: 6px 12px;
             border-radius: 20px;
@@ -134,28 +150,26 @@
             color: white;
         }
 
-        /* --- المحتوى (تم تقليل الهوامش هنا) --- */
+        /* --- المحتوى --- */
         .main-container {
             flex: 1;
-            padding: 8px; /* تقليل الهوامش الخارجية للشاشة */
+            padding: 8px;
             width: 100%;
-            max-width: 100%;
             display: grid;
-            grid-template-columns: 100%;
-            gap: 10px; /* مسافة أقل بين البطاقات */
+            grid-template-columns: 100%; /* عمود واحد */
+            gap: 10px;
             align-content: start;
         }
 
-        /* --- البطاقة (تصميم مضغوط) --- */
+        /* --- البطاقة --- */
         .card {
             background: var(--bg-card);
             border-radius: 12px;
-            padding: 12px 15px; /* تقليل الحشو الداخلي للبطاقة */
+            padding: 12px 15px;
             box-shadow: var(--shadow);
-            border: none; /* حذف الحدود البيضاء */
+            border: none;
             display: flex;
             flex-direction: column;
-            position: relative;
         }
 
         .card.completed {
@@ -178,23 +192,21 @@
         }
         [data-theme="dark"] .virtue-tag { background: rgba(45, 212, 191, 0.15); }
 
-        /* منطقة النص (تم تصغيرها) */
         .dhikr-content {
             font-family: var(--font-quran);
-            font-size: 1.25rem; /* تصغير الخط قليلاً */
-            line-height: 1.6; /* تقليل التباعد بين الأسطر */
-            margin-bottom: 12px; /* تقليل المسافة أسفل النص */
+            font-size: 1.25rem;
+            line-height: 1.6;
+            margin-bottom: 12px;
             text-align: justify;
             color: var(--text-main);
         }
 
-        /* الفوتر الداخلي */
         .card-footer {
             margin-top: auto;
             display: flex;
             align-items: center;
             gap: 10px;
-            border-top: 1px solid rgba(0,0,0,0.05); /* خط فاصل خفيف جداً */
+            border-top: 1px solid rgba(0,0,0,0.05);
             padding-top: 10px;
         }
 
@@ -202,7 +214,7 @@
 
         .progress-indicator {
             min-width: 45px;
-            height: 45px; /* تصغير دائرة العداد */
+            height: 45px;
             border-radius: 10px;
             background: var(--bg-body);
             color: var(--primary);
@@ -220,7 +232,7 @@
             border: none;
             border-radius: 10px;
             padding: 0;
-            height: 45px; /* نفس ارتفاع العداد */
+            height: 45px;
             font-family: var(--font-ui);
             font-size: 0.95rem;
             font-weight: 700;
@@ -244,49 +256,53 @@
             color: var(--text-light);
             border-top: 1px solid rgba(0,0,0,0.05);
         }
-
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="brand">
-            <i class="fa-solid fa-kaaba"></i>
-            <div class="brand-text">
-                <h1>حصن المسلم</h1>
-                <span>تطوير: Mahmoud Badr</span>
+    <!-- الإطار الذي يجمع التطبيق بعرض 50% -->
+    <div class="mobile-frame">
+        
+        <header>
+            <div class="brand">
+                <i class="fa-solid fa-kaaba"></i>
+                <div class="brand-text">
+                    <h1>حصن المسلم</h1>
+                    <span>تطوير: Mahmoud Badr</span>
+                </div>
+            </div>
+            <button class="theme-btn" onclick="toggleTheme()">
+                <i class="fa-solid fa-moon" id="themeIcon"></i>
+            </button>
+        </header>
+
+        <div class="nav-wrapper">
+            <div class="nav-scroller">
+                <button class="nav-btn active" onclick="loadCategory('morning')"><i class="fa-regular fa-sun"></i> الصباح</button>
+                <button class="nav-btn" onclick="loadCategory('evening')"><i class="fa-regular fa-moon"></i> المساء</button>
+                <button class="nav-btn" onclick="loadCategory('sleep')"><i class="fa-solid fa-bed"></i> النوم</button>
+                <button class="nav-btn" onclick="loadCategory('prayer')"><i class="fa-solid fa-person-praying"></i> الصلاة</button>
+                <button class="nav-btn" onclick="loadCategory('wudu')"><i class="fa-solid fa-droplet"></i> الوضوء</button>
+                <button class="nav-btn" onclick="loadCategory('mosque')"><i class="fa-solid fa-mosque"></i> المسجد</button>
+                <button class="nav-btn" onclick="loadCategory('quranic')"><i class="fa-solid fa-book-quran"></i> قرآنية</button>
+                <button class="nav-btn" onclick="loadCategory('prophets')"><i class="fa-solid fa-hands-praying"></i> الأنبياء</button>
+                <button class="nav-btn" onclick="loadCategory('tasbih')"><i class="fa-solid fa-fingerprint"></i> تسابيح</button>
             </div>
         </div>
-        <button class="theme-btn" onclick="toggleTheme()">
-            <i class="fa-solid fa-moon" id="themeIcon"></i>
-        </button>
-    </header>
 
-    <div class="nav-wrapper">
-        <div class="nav-scroller">
-            <button class="nav-btn active" onclick="loadCategory('morning')"><i class="fa-regular fa-sun"></i> الصباح</button>
-            <button class="nav-btn" onclick="loadCategory('evening')"><i class="fa-regular fa-moon"></i> المساء</button>
-            <button class="nav-btn" onclick="loadCategory('sleep')"><i class="fa-solid fa-bed"></i> النوم</button>
-            <button class="nav-btn" onclick="loadCategory('prayer')"><i class="fa-solid fa-person-praying"></i> الصلاة</button>
-            <button class="nav-btn" onclick="loadCategory('wudu')"><i class="fa-solid fa-droplet"></i> الوضوء</button>
-            <button class="nav-btn" onclick="loadCategory('mosque')"><i class="fa-solid fa-mosque"></i> المسجد</button>
-            <button class="nav-btn" onclick="loadCategory('quranic')"><i class="fa-solid fa-book-quran"></i> قرآنية</button>
-            <button class="nav-btn" onclick="loadCategory('prophets')"><i class="fa-solid fa-hands-praying"></i> الأنبياء</button>
-            <button class="nav-btn" onclick="loadCategory('tasbih')"><i class="fa-solid fa-fingerprint"></i> تسابيح</button>
-        </div>
+        <main class="main-container" id="content">
+            <!-- البطاقات ستظهر هنا -->
+        </main>
+
+        <footer>
+            <p>جميع الحقوق محفوظة © 2025</p>
+            <p>تم تصميم وتطوير التطبيق بواسطة <strong>Mahmoud Badr</strong></p>
+        </footer>
+
     </div>
 
-    <main class="main-container" id="content">
-        <!-- البطاقات ستظهر هنا -->
-    </main>
-
-    <footer>
-        <p>جميع الحقوق محفوظة © 2025</p>
-        <p>تم تصميم وتطوير التطبيق بواسطة <strong>Mahmoud Badr</strong></p>
-    </footer>
-
     <script>
-        // === نفس قاعدة البيانات السابقة تماماً ===
+        // === قاعدة البيانات (كما هي) ===
         const db = {
             morning: [
                 { text: "أَعُوذُ بِاللهِ مِنْ الشَّيْطَانِ الرَّجِيمِ<br>اللّهُ لاَ إِلَـهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ لاَ تَأْخُذُهُ سِنَةٌ وَلاَ نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلاَّ بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلاَ يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلاَّ بِمَا شَاء ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالأَرْضَ ۖ وَلاَ يَؤُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ.", count: 1, virtue: "آية الكرسي" },
