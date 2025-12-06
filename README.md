@@ -14,33 +14,33 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* --- إعدادات الألوان والخطوط --- */
+        /* --- المتغيرات والتصميم العام --- */
         :root {
             --primary: #0f766e;
-            --primary-hover: #115e59;
+            --primary-dark: #0d5f58;
             --accent: #f59e0b;
-            --bg-body: #ffffff;       /* خلفية بيضاء نقية */
-            --bg-card: #ffffff;       /* البطاقة بيضاء */
-            --text-main: #000000;     /* نص أسود واضح */
-            --text-light: #555555;
-            --border: #eeeeee;        /* فواصل خفيفة جداً */
+            --bg-body: #f8fafc;       /* خلفية فاتحة جداً */
+            --bg-card: #ffffff;
+            --text-main: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
             --font-ui: 'Tajawal', sans-serif;
             --font-quran: 'Amiri', serif;
         }
 
         /* الوضع الليلي */
         [data-theme="dark"] {
-            --primary: #2dd4bf;
-            --primary-hover: #14b8a6;
+            --primary: #14b8a6;
+            --primary-dark: #0f766e;
             --accent: #fbbf24;
-            --bg-body: #000000;       /* خلفية سوداء نقية */
-            --bg-card: #0a0a0a;
-            --text-main: #ffffff;
-            --text-light: #bbbbbb;
-            --border: #333333;
+            --bg-body: #020617;
+            --bg-card: #0f172a;
+            --text-main: #f1f5f9;
+            --text-light: #94a3b8;
+            --border: #1e293b;
         }
 
-        /* --- تصفير الهوامش (مهم جداً لملء الشاشة) --- */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -54,46 +54,48 @@
             color: var(--text-main);
             width: 100%;
             min-height: 100vh;
-            overflow-x: hidden; /* منع الحركة الجانبية */
+            overflow-x: hidden;
         }
 
-        /* --- الهيدر يملأ الشاشة --- */
+        /* --- الهيدر --- */
         header {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
             color: white;
-            padding: 12px 15px; /* مسافة داخلية بسيطة */
+            padding: 15px;
             position: sticky;
             top: 0;
             z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: 100%; /* عرض كامل */
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         .brand { display: flex; align-items: center; gap: 10px; }
-        .brand i { font-size: 1.4rem; color: var(--accent); }
-        .brand-text h1 { font-size: 1.1rem; font-weight: 700; }
-        .brand-text span { font-size: 0.75rem; opacity: 0.9; }
+        .brand i { font-size: 1.6rem; color: var(--accent); filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
+        .brand-text h1 { font-size: 1.2rem; font-weight: 800; letter-spacing: -0.5px; }
+        .brand-text span { font-size: 0.75rem; opacity: 0.9; font-weight: 300; }
 
         .theme-btn {
-            background: transparent;
-            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.2);
             color: white;
-            width: 36px; height: 36px;
-            border-radius: 50%;
+            width: 40px; height: 40px;
+            border-radius: 12px;
             cursor: pointer;
             display: flex; align-items: center; justify-content: center;
+            transition: transform 0.2s;
         }
+        .theme-btn:active { transform: scale(0.95); }
 
         /* --- شريط التنقل --- */
         .nav-wrapper {
             background: var(--bg-body);
             position: sticky;
-            top: 60px; /* أسفل الهيدر */
+            top: 70px;
             z-index: 900;
-            padding: 8px 0;
+            padding: 10px 0;
             border-bottom: 1px solid var(--border);
             width: 100%;
         }
@@ -102,7 +104,7 @@
             display: flex;
             overflow-x: auto;
             gap: 8px;
-            padding: 0 10px;
+            padding: 0 15px;
             scrollbar-width: none;
         }
         .nav-scroller::-webkit-scrollbar { display: none; }
@@ -111,131 +113,159 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             color: var(--text-light);
-            padding: 8px 15px;
-            border-radius: 4px; /* حواف شبه مربعة لتناسب التصميم */
+            padding: 10px 18px;
+            border-radius: 50px;
             white-space: nowrap;
             font-family: var(--font-ui);
             font-weight: 700;
             font-size: 0.9rem;
             cursor: pointer;
-            display: flex; align-items: center; gap: 6px;
+            display: flex; align-items: center; gap: 8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
         }
 
         .nav-btn.active {
             background: var(--primary);
             color: white;
             border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(15, 118, 110, 0.3);
+            transform: translateY(-1px);
         }
 
-        /* --- منطقة المحتوى (الأساسية) --- */
+        /* --- المحتوى --- */
         .main-container {
-            width: 100%; /* عرض كامل للشاشة */
-            padding: 0;  /* إلغاء الهوامش الخارجية تماماً */
+            width: 100%;
+            padding: 0;
             display: flex;
             flex-direction: column;
         }
 
-        /* --- تصميم البطاقة (الحدود هي الكلام) --- */
+        /* --- البطاقة --- */
         .card {
             background: var(--bg-card);
-            width: 100%; /* البطاقة تأخذ عرض الشاشة بالكامل */
-            border-bottom: 10px solid var(--bg-body); /* فاصل بين الأذكار بلون الخلفية */
-            padding: 10px 12px; /* مسافة داخلية صغيرة جداً حتى لا يلتصق النص بالحافة تماماً */
+            width: 100%;
+            border-bottom: 8px solid var(--bg-body);
+            padding: 20px;
             display: flex;
             flex-direction: column;
-        }
-        
-        /* في الوضع الليلي الفاصل يكون بلون داكن */
-        [data-theme="dark"] .card {
-             border-bottom: 1px solid var(--border);
+            position: relative;
+            transition: background-color 0.3s;
         }
 
-        /* عند الاكتمال */
+        [data-theme="dark"] .card { border-bottom-color: #020617; }
+
         .card.completed {
-            background-color: rgba(16, 185, 129, 0.05);
+            background-color: rgba(16, 185, 129, 0.03);
+        }
+        .card.completed::before {
+            content: '';
+            position: absolute;
+            right: 0; top: 0; bottom: 0;
+            width: 4px;
+            background: var(--success);
         }
 
-        /* فضل الذكر */
         .virtue-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(15, 118, 110, 0.08);
             color: var(--primary);
-            font-size: 0.8rem;
-            font-weight: bold;
-            margin-bottom: 8px;
-            display: flex; align-items: center; gap: 5px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            width: fit-content;
         }
+        [data-theme="dark"] .virtue-tag { background: rgba(20, 184, 166, 0.15); }
 
-        /* النص (أهم جزء) */
         .dhikr-content {
             font-family: var(--font-quran);
-            font-size: 1.4rem; /* خط كبير وواضح */
-            line-height: 1.8;
+            font-size: 1.5rem;
+            line-height: 2;
             color: var(--text-main);
-            text-align: justify; /* محاذاة النص من اليمين لليسار ليملأ السطر */
-            width: 100%;
+            text-align: justify;
+            margin-bottom: 20px;
         }
 
-        /* الفوتر (الزر والعداد) */
+        /* --- الفوتر والأزرار --- */
         .card-footer {
-            margin-top: 15px;
-            padding-top: 10px;
-            border-top: 1px solid var(--border);
             display: flex;
-            gap: 10px;
-            align-items: stretch;
+            align-items: center;
+            gap: 12px;
+            margin-top: auto;
         }
 
         .progress-box {
-            display: flex; align-items: center; justify-content: center;
-            background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
+            min-width: 65px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-body);
+            border: 2px solid var(--border);
+            border-radius: 12px;
             font-weight: 800;
-            font-size: 1.1rem;
-            padding: 0 15px;
-            border-radius: 4px;
-            min-width: 60px;
+            font-size: 1.2rem;
+            color: var(--primary);
+            font-family: var(--font-ui);
         }
 
         .action-btn {
             flex: 1;
+            height: 55px;
             background: var(--primary);
             color: white;
             border: none;
-            border-radius: 4px;
-            padding: 12px;
+            border-radius: 12px;
             font-family: var(--font-ui);
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 700;
             cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            user-select: none;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        
-        .action-btn:active { background: var(--primary-hover); }
-        .action-btn.done { background: #10b981; cursor: default; }
 
-        /* --- الفوتر --- */
+        .action-btn:active { transform: scale(0.97); background: var(--primary-dark); }
+        
+        .action-btn.done {
+            background: var(--success);
+            cursor: default;
+            box-shadow: none;
+        }
+
+        /* --- تأثيرات القصاصات (Confetti) --- */
+        .confetti {
+            position: absolute;
+            width: 10px; height: 10px;
+            background-color: #f00;
+            animation: fall linear forwards;
+            z-index: 999;
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(150px) rotate(720deg); opacity: 0; }
+        }
+
         footer {
             text-align: center;
-            padding: 20px;
+            padding: 30px;
             background: var(--bg-body);
             color: var(--text-light);
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             border-top: 1px solid var(--border);
-        }
-
-        /* تعديل خاص للشاشات الكبيرة جداً ليبقى الخط مقروءاً */
-        @media (min-width: 1000px) {
-            .dhikr-content {
-                font-size: 1.6rem;
-                line-height: 2;
-            }
         }
     </style>
 </head>
 <body>
 
-    <!-- الهيدر يملأ الشاشة -->
     <header>
         <div class="brand">
             <i class="fa-solid fa-kaaba"></i>
@@ -249,7 +279,6 @@
         </button>
     </header>
 
-    <!-- الشريط يملأ الشاشة -->
     <nav class="nav-wrapper">
         <div class="nav-scroller">
             <button class="nav-btn active" onclick="loadCategory('morning')"><i class="fa-regular fa-sun"></i> الصباح</button>
@@ -264,7 +293,6 @@
         </div>
     </nav>
 
-    <!-- المحتوى يملأ الشاشة -->
     <main class="main-container" id="content">
         <!-- البطاقات -->
     </main>
@@ -275,6 +303,20 @@
     </footer>
 
     <script>
+        // === رسائل التشجيع العشوائية ===
+        const congratsMessages = [
+            "بارك الله فيك",
+            "تقبل الله طاعتك",
+            "زادك الله نوراً",
+            "رزقك الله الجنة",
+            "غفر الله ذنبك",
+            "أسعد الله قلبك",
+            "نور الله دربك",
+            "جزاك الله خيراً",
+            "ثبتك الله",
+            "هداك الله لما يحب"
+        ];
+
         // === قاعدة البيانات ===
         const db = {
             morning: [
@@ -475,7 +517,7 @@
                 { text: "سُبْحَانَ اللَّهِ وَالْحَمْدُ لِلَّهِ", count: 100, virtue: "تملآن ما بين السماء والأرض" },
                 { text: "سُبْحَانَ اللهِ العَظِيمِ وَبِحَمْدِهِ", count: 100, virtue: "نخلة في الجنة" },
                 { text: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ ، سُبْحَانَ اللَّهِ الْعَظِيمِ", count: 100, virtue: "ثقيلتان في الميزان" },
-                { text: "لَا إلَه إلّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلُّ شَيْءِ قَدِيرِ.", count: 100, virtue: "عدل عشر رقاب" },
+                { text: "لَا إلَه إلّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءِ قَدِيرِ.", count: 100, virtue: "عدل عشر رقاب" },
                 { text: "لا حَوْلَ وَلا قُوَّةَ إِلا بِاللَّهِ", count: 100, virtue: "كنز من كنوز الجنة" },
                 { text: "الْحَمْدُ للّهِ رَبِّ الْعَالَمِينَ", count: 100, virtue: "تملأ الميزان" },
                 { text: "اللَّهُم صَلِّ وَسَلِم وَبَارِك عَلَى سَيِّدِنَا مُحَمَّد", count: 100, virtue: "إدراك الشفاعة" },
@@ -493,6 +535,7 @@
         const container = document.getElementById('content');
         const navBtns = document.querySelectorAll('.nav-btn');
 
+        // وظيفة الوضع الليلي
         function toggleTheme() {
             const body = document.body;
             const icon = document.getElementById('themeIcon');
@@ -513,6 +556,7 @@
             toggleTheme();
         }
 
+        // تحميل الفئة
         function loadCategory(catName) {
             navBtns.forEach(btn => btn.classList.remove('active'));
             if(event && event.currentTarget) {
@@ -551,7 +595,7 @@
                 <div class="card-footer">
                     <div class="progress-box" id="progress-${index}">0/${item.count}</div>
                     <button class="action-btn" onclick="updateCount(this, ${item.count}, ${index})">
-                         اضغط
+                         <i class="fa-solid fa-fingerprint"></i> اضغط للتسبيح
                     </button>
                 </div>
             `;
@@ -576,11 +620,44 @@
         }
 
         function finishCard(btn, card) {
+            // اختيار رسالة عشوائية
+            const randomMsg = congratsMessages[Math.floor(Math.random() * congratsMessages.length)];
+            
             btn.classList.add('done');
-            btn.innerHTML = '<i class="fa-solid fa-check"></i>';
+            btn.innerHTML = `<i class="fa-solid fa-check-circle"></i> ${randomMsg}`;
             btn.disabled = true;
             card.classList.add('completed');
+            
             if(navigator.vibrate) navigator.vibrate([50, 30, 50]);
+            
+            // تشغيل تأثير القصاصات (Confetti)
+            const rect = btn.getBoundingClientRect();
+            triggerConfetti(rect.left + rect.width / 2, rect.top);
+        }
+
+        // دالة إنشاء القصاصات
+        function triggerConfetti(x, y) {
+            for (let i = 0; i < 30; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = x + 'px';
+                confetti.style.top = y + 'px';
+                confetti.style.backgroundColor = ['#10b981', '#f59e0b', '#3b82f6', '#ec4899'][Math.floor(Math.random() * 4)];
+                
+                // حركة عشوائية
+                const randomX = (Math.random() - 0.5) * 200;
+                confetti.animate([
+                    { transform: `translate(0, 0) rotate(0deg)`, opacity: 1 },
+                    { transform: `translate(${randomX}px, -100px) rotate(360deg)`, opacity: 1, offset: 0.5 },
+                    { transform: `translate(${randomX * 1.5}px, 200px) rotate(720deg)`, opacity: 0 }
+                ], {
+                    duration: 1000 + Math.random() * 1000,
+                    easing: 'cubic-bezier(0.25, 1, 0.5, 1)'
+                });
+
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 2000);
+            }
         }
 
         window.onload = () => {
