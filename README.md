@@ -2,7 +2,6 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <!-- إعدادات الشاشة للموبايل: منع التكبير، وضبط العرض -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0f766e">
     <meta name="description" content="تطبيق حصن المسلم - أذكار الكتاب والسنة - تطوير Mahmoud Badr">
@@ -20,12 +19,11 @@
             --primary: #0f766e;
             --primary-hover: #115e59;
             --accent: #f59e0b;
-            --bg-body: #f8fafc;
+            --bg-body: #f1f5f9; /* لون خلفية أفتح قليلاً */
             --bg-card: #ffffff;
-            --text-main: #1f2937;
-            --text-light: #4b5563;
-            --border: #e2e8f0;
-            --shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            --text-main: #1e293b;
+            --text-light: #64748b;
+            --shadow: 0 1px 3px rgba(0,0,0,0.1); /* ظل خفيف بدلاً من الحدود */
             --font-ui: 'Tajawal', sans-serif;
             --font-quran: 'Amiri', serif;
         }
@@ -39,16 +37,14 @@
             --bg-card: #1e293b;
             --text-main: #f1f5f9;
             --text-light: #94a3b8;
-            --border: #334155;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            --shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            transition: all 0.2s ease;
-            -webkit-tap-highlight-color: transparent; /* إزالة لون النقر الأزرق في الموبايل */
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -58,188 +54,163 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            overscroll-behavior-y: none; /* منع اهتزاز الصفحة عند السحب */
+            overflow-x: hidden; /* منع الحركة الأفقية */
         }
 
-        /* --- الهيدر (رأس التطبيق) --- */
+        /* --- الهيدر --- */
         header {
             background: linear-gradient(135deg, #0f766e, #115e59);
             color: white;
-            padding: 12px 16px;
+            padding: 10px 15px;
             position: sticky;
             top: 0;
             z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
 
         .brand {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
-        .brand i {
-            font-size: 1.5rem;
-            color: var(--accent);
-        }
-
-        .brand-text h1 {
-            font-size: 1.1rem;
-            font-weight: 800;
-            margin-bottom: 2px;
-        }
-
-        .brand-text span {
-            font-size: 0.75rem;
-            opacity: 0.9;
-            font-weight: 300;
-            display: block;
-        }
+        .brand i { font-size: 1.4rem; color: var(--accent); }
+        .brand-text h1 { font-size: 1rem; font-weight: 800; margin: 0; }
+        .brand-text span { font-size: 0.7rem; opacity: 0.9; display: block; }
 
         .theme-btn {
             background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
+            border: none;
             color: white;
-            width: 38px;
-            height: 38px;
-            border-radius: 12px;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.1rem;
         }
 
-        /* --- شريط التصنيفات --- */
+        /* --- شريط التنقل --- */
         .nav-wrapper {
             background: var(--bg-card);
-            border-bottom: 1px solid var(--border);
             position: sticky;
-            top: 64px; /* ارتفاع الهيدر التقريبي */
+            top: 55px;
             z-index: 900;
-            padding: 12px 0;
-            box-shadow: 0 4px 6px -4px rgba(0,0,0,0.05);
+            padding: 8px 0;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
         }
 
         .nav-scroller {
             display: flex;
             overflow-x: auto;
-            gap: 8px;
-            padding: 0 16px;
-            scrollbar-width: none; /* إخفاء السكرول لفايرفوكس */
-            -webkit-overflow-scrolling: touch; /* نعومة السكرول في آيفون */
+            gap: 6px;
+            padding: 0 10px;
+            scrollbar-width: none;
         }
-        
-        .nav-scroller::-webkit-scrollbar {
-            display: none; /* إخفاء السكرول لكروم */
-        }
+        .nav-scroller::-webkit-scrollbar { display: none; }
 
         .nav-btn {
             background: var(--bg-body);
-            border: 1px solid var(--border);
+            border: none; /* حذف حدود الأزرار */
             color: var(--text-light);
-            padding: 8px 14px;
-            border-radius: 12px;
+            padding: 6px 12px;
+            border-radius: 20px;
             white-space: nowrap;
             font-family: var(--font-ui);
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 6px;
-            flex-shrink: 0; /* منع انكماش الأزرار */
+            gap: 5px;
         }
 
         .nav-btn.active {
             background: var(--primary);
             color: white;
-            border-color: var(--primary);
         }
 
-        /* --- منطقة المحتوى (عمود واحد للموبايل) --- */
+        /* --- المحتوى (تم تقليل الهوامش هنا) --- */
         .main-container {
             flex: 1;
-            padding: 16px;
+            padding: 8px; /* تقليل الهوامش الخارجية للشاشة */
             width: 100%;
-            max-width: 600px; /* لضمان شكل الموبايل حتى لو فتح على شاشة كبيرة */
-            margin: 0 auto;
+            max-width: 100%;
             display: grid;
-            grid-template-columns: 100%; /* عمود واحد فقط دائماً */
-            gap: 16px;
+            grid-template-columns: 100%;
+            gap: 10px; /* مسافة أقل بين البطاقات */
             align-content: start;
         }
 
-        /* --- تصميم البطاقة --- */
+        /* --- البطاقة (تصميم مضغوط) --- */
         .card {
             background: var(--bg-card);
-            border-radius: 16px;
-            padding: 18px;
-            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 15px; /* تقليل الحشو الداخلي للبطاقة */
             box-shadow: var(--shadow);
+            border: none; /* حذف الحدود البيضاء */
             display: flex;
             flex-direction: column;
             position: relative;
         }
 
-        /* الحالة المكتملة */
         .card.completed {
-            background-color: rgba(16, 185, 129, 0.08);
-            border-color: #10b981;
+            background-color: rgba(16, 185, 129, 0.05);
+            opacity: 0.85;
         }
 
         .virtue-tag {
             background: rgba(15, 118, 110, 0.08);
             color: var(--primary);
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 6px;
+            padding: 3px 8px;
+            border-radius: 4px;
             width: fit-content;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 4px;
         }
+        [data-theme="dark"] .virtue-tag { background: rgba(45, 212, 191, 0.15); }
 
-        [data-theme="dark"] .virtue-tag {
-            background: rgba(45, 212, 191, 0.15);
-        }
-
+        /* منطقة النص (تم تصغيرها) */
         .dhikr-content {
             font-family: var(--font-quran);
-            font-size: 1.35rem; /* حجم مناسب للموبايل */
-            line-height: 1.8;
-            margin-bottom: 20px;
+            font-size: 1.25rem; /* تصغير الخط قليلاً */
+            line-height: 1.6; /* تقليل التباعد بين الأسطر */
+            margin-bottom: 12px; /* تقليل المسافة أسفل النص */
             text-align: justify;
             color: var(--text-main);
         }
 
-        /* --- الفوتر داخل البطاقة --- */
+        /* الفوتر الداخلي */
         .card-footer {
             margin-top: auto;
             display: flex;
-            align-items: stretch;
-            gap: 12px;
-            border-top: 1px solid var(--border);
-            padding-top: 16px;
+            align-items: center;
+            gap: 10px;
+            border-top: 1px solid rgba(0,0,0,0.05); /* خط فاصل خفيف جداً */
+            padding-top: 10px;
         }
 
+        [data-theme="dark"] .card-footer { border-color: rgba(255,255,255,0.1); }
+
         .progress-indicator {
-            min-width: 55px;
-            height: 55px;
-            border-radius: 12px;
+            min-width: 45px;
+            height: 45px; /* تصغير دائرة العداد */
+            border-radius: 10px;
             background: var(--bg-body);
             color: var(--primary);
             font-weight: 800;
-            font-size: 1.1rem;
+            font-size: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px solid var(--border);
         }
 
         .action-btn {
@@ -247,50 +218,37 @@
             background: var(--primary);
             color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
+            padding: 0;
+            height: 45px; /* نفس ارتفاع العداد */
             font-family: var(--font-ui);
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            /* منع تحديد النص عند النقر السريع */
+            gap: 6px;
             user-select: none;
-            -webkit-user-select: none;
         }
 
-        .action-btn:active {
-            transform: scale(0.96);
-            background: var(--primary-hover);
-        }
+        .action-btn:active { transform: scale(0.97); }
+        .action-btn.done { background: #10b981; cursor: default; }
 
-        .action-btn.done {
-            background: #10b981;
-            cursor: default;
-        }
-
-        /* --- الفوتر السفلي --- */
+        /* --- الفوتر --- */
         footer {
             background: var(--bg-card);
-            border-top: 1px solid var(--border);
             text-align: center;
-            padding: 20px 10px;
-            font-size: 0.85rem;
+            padding: 15px;
+            font-size: 0.8rem;
             color: var(--text-light);
-            padding-bottom: 30px; /* مسافة إضافية لأسفل الموبايل */
-        }
-
-        footer strong {
-            color: var(--primary);
+            border-top: 1px solid rgba(0,0,0,0.05);
         }
 
     </style>
 </head>
 <body>
 
-    <!-- رأس الصفحة -->
     <header>
         <div class="brand">
             <i class="fa-solid fa-kaaba"></i>
@@ -299,12 +257,11 @@
                 <span>تطوير: Mahmoud Badr</span>
             </div>
         </div>
-        <button class="theme-btn" onclick="toggleTheme()" aria-label="تبديل الوضع">
+        <button class="theme-btn" onclick="toggleTheme()">
             <i class="fa-solid fa-moon" id="themeIcon"></i>
         </button>
     </header>
 
-    <!-- شريط التنقل -->
     <div class="nav-wrapper">
         <div class="nav-scroller">
             <button class="nav-btn active" onclick="loadCategory('morning')"><i class="fa-regular fa-sun"></i> الصباح</button>
@@ -319,22 +276,20 @@
         </div>
     </div>
 
-    <!-- المحتوى -->
     <main class="main-container" id="content">
-        <!-- سيتم توليد البطاقات هنا -->
+        <!-- البطاقات ستظهر هنا -->
     </main>
 
-    <!-- التذييل -->
     <footer>
         <p>جميع الحقوق محفوظة © 2025</p>
         <p>تم تصميم وتطوير التطبيق بواسطة <strong>Mahmoud Badr</strong></p>
     </footer>
 
     <script>
-        // === قاعدة البيانات ===
+        // === نفس قاعدة البيانات السابقة تماماً ===
         const db = {
             morning: [
-                { text: "أَعُوذُ بِاللهِ مِنْ الشَّيْطَانِ الرَّجِيمِ<br>اللّهُ لاَ إِلَـهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ لاَ تَأْخُذُهُ سِنَةٌ وَلاَ نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلاَّ بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلاَ يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلاَّ بِمَا شَاء ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالأَرْضَ ۖ وَلاَ يَؤُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ.", count: 1, virtue: "آية الكرسي: أجير من الجن" },
+                { text: "أَعُوذُ بِاللهِ مِنْ الشَّيْطَانِ الرَّجِيمِ<br>اللّهُ لاَ إِلَـهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ لاَ تَأْخُذُهُ سِنَةٌ وَلاَ نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلاَّ بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلاَ يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلاَّ بِمَا شَاء ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالأَرْضَ ۖ وَلاَ يَؤُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ.", count: 1, virtue: "آية الكرسي" },
                 { text: "بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم<br>قُلْ هُوَ ٱللَّهُ أَحَدٌ، ٱللَّهُ ٱلصَّمَدُ، لَمْ يَلِدْ وَلَمْ يُولَدْ، وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌۢ.", count: 3, virtue: "الإخلاص" },
                 { text: "بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم<br>قُلْ أَعُوذُ بِرَبِّ ٱلْفَلَقِ، مِن شَرِّ مَا خَلَقَ، وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ، وَمِن شَرِّ ٱلنَّفَّٰثَٰتِ فِى ٱلْعُقَدِ، وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ.", count: 3, virtue: "الفلق" },
                 { text: "بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم<br>قُلْ أَعُوذُ بِرَبِّ ٱلنَّاسِ، مَلِكِ ٱلنَّاسِ، إِلَٰهِ ٱلنَّاسِ، مِن شَرِّ ٱلْوَسْوَاسِ ٱلْخَنَّاسِ، ٱلَّذِى يُوَسْوِسُ فِى صُدُورِ ٱلنَّاسِ، مِنَ ٱلْجِنَّةِ وَٱلنَّاسِ.", count: 3, virtue: "الناس" },
@@ -549,7 +504,6 @@
         const container = document.getElementById('content');
         const navBtns = document.querySelectorAll('.nav-btn');
 
-        // وظيفة الوضع الليلي
         function toggleTheme() {
             const body = document.body;
             const icon = document.getElementById('themeIcon');
@@ -566,22 +520,17 @@
             }
         }
 
-        // استرجاع الثيم المحفوظ
         if (localStorage.getItem('theme') === 'dark') {
             toggleTheme();
         }
 
-        // تحميل الفئة
         function loadCategory(catName) {
-            // تحديث الأزرار النشطة
             navBtns.forEach(btn => btn.classList.remove('active'));
             if(event && event.currentTarget) {
                 event.currentTarget.classList.add('active');
-                // تمرير الشريط ليظهر الزر النشط في المنتصف
                 event.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             }
 
-            // مسح المحتوى القديم بتأثير بسيط
             container.style.opacity = '0';
             
             setTimeout(() => {
@@ -599,7 +548,6 @@
             }, 150);
         }
 
-        // إنشاء بطاقة الذكر
         function createCard(item, index) {
             const card = document.createElement('div');
             card.className = 'card';
@@ -621,7 +569,6 @@
             container.appendChild(card);
         }
 
-        // تحديث العداد
         function updateCount(btn, max, index) {
             const progress = document.getElementById(`progress-${index}`);
             const card = document.getElementById(`card-${index}`);
@@ -631,8 +578,7 @@
                 current++;
                 progress.innerText = `${current}/${max}`;
                 
-                // اهتزاز خفيف للموبايل
-                if(navigator.vibrate) navigator.vibrate(30);
+                if(navigator.vibrate) navigator.vibrate(25);
 
                 if (current === max) {
                     finishCard(btn, card);
@@ -642,15 +588,12 @@
 
         function finishCard(btn, card) {
             btn.classList.add('done');
-            btn.innerHTML = '<i class="fa-solid fa-check"></i> تم';
+            btn.innerHTML = '<i class="fa-solid fa-check"></i>';
             btn.disabled = true;
             card.classList.add('completed');
-            
-            // اهتزاز أطول عند الانتهاء
             if(navigator.vibrate) navigator.vibrate([50, 30, 50]);
         }
 
-        // التشغيل التلقائي
         window.onload = () => {
             const firstBtn = document.querySelector('.nav-btn');
             if(firstBtn) firstBtn.classList.add('active');
