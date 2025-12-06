@@ -4,283 +4,429 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0f766e">
-    <title>حصن المسلم</title>
+    <meta name="description" content="تطبيق حصن المسلم - أذكار الكتاب والسنة - تطوير Mahmoud Badr">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>حصن المسلم | Mahmoud Badr</title>
     
+    <!-- استدعاء الخطوط والأيقونات -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
+        /* === إعدادات المتغيرات والألوان === */
         :root {
             --primary: #0f766e;
+            --primary-grad: linear-gradient(135deg, #0f766e, #115e59);
+            --accent: #f59e0b;
+            --bg-body: #e2e8f0; /* لون خلفية الكمبيوتر */
+            --bg-app: #f8fafc;  /* لون خلفية التطبيق */
             --bg-card: #ffffff;
-            --text-main: #1f2937;
-            --text-secondary: #6b7280;
-            --border-color: #e5e7eb;
-            --font-ui: 'Tajawal', sans-serif;
-            --font-content: 'Amiri', serif;
+            --text-main: #1e293b;
+            --text-sec: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
         [data-theme="dark"] {
-            --primary: #14b8a6;
-            --bg-card: #000000; /* في الوضع الليلي تكون الخلفية سوداء تماماً */
-            --text-main: #f3f4f6;
-            --text-secondary: #9ca3af;
-            --border-color: #1f2937;
+            --primary: #2dd4bf;
+            --primary-grad: linear-gradient(135deg, #134e4a, #042f2e);
+            --accent: #fbbf24;
+            --bg-body: #020617;
+            --bg-app: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #f1f5f9;
+            --text-sec: #94a3b8;
+            --border: #334155;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
         }
 
-        /* تصفير كامل للهوامش */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
             -webkit-tap-highlight-color: transparent;
+            font-family: 'Tajawal', sans-serif;
         }
 
+        /* تنسيق الصفحة الخارجية (للكمبيوتر) */
         body {
-            font-family: var(--font-ui);
-            background-color: var(--bg-card);
-            color: var(--text-main);
-            overflow-x: hidden;
-            width: 100%;
-            height: 100%;
+            background-color: var(--bg-body);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
         }
 
-        /* --- الهيدر (بعرض الشاشة) --- */
+        /* === جسم التطبيق (الموبايل) === */
+        #app-frame {
+            width: 100%;
+            max-width: 480px; /* عرض الموبايل */
+            background-color: var(--bg-app);
+            color: var(--text-main);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 40px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* === الهيدر === */
         header {
-            background: var(--primary);
+            background: var(--primary-grad);
             color: white;
-            padding: 12px 20px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            padding: 20px;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            position: relative;
+            z-index: 10;
+            box-shadow: var(--shadow);
+        }
+
+        .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 55px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
         }
 
-        .header-title {
-            font-size: 1.1rem;
+        .brand-box h1 {
+            font-size: 1.5rem;
             font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            margin: 0;
+            line-height: 1.2;
         }
 
-        .theme-btn {
-            background: none;
+        .brand-box span {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .brand-box b { color: var(--accent); }
+
+        .tools button {
+            background: rgba(255,255,255,0.2);
             border: none;
             color: white;
-            font-size: 1.1rem;
-            padding: 5px;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            font-size: 1.2rem;
             cursor: pointer;
+            backdrop-filter: blur(5px);
+            margin-left: 8px;
+            transition: 0.2s;
         }
+        .tools button:active { transform: scale(0.95); }
 
-        /* --- شريط التنقل (بعرض الشاشة) --- */
-        .nav-wrapper {
-            background: var(--bg-card);
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 55px;
-            z-index: 900;
-            width: 100%;
-        }
-
-        .nav-scroll {
+        /* === كارت الصلاة === */
+        .prayer-info-card {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 15px;
             display: flex;
-            overflow-x: auto;
-            white-space: nowrap;
-            padding: 10px;
-            gap: 8px;
-            scrollbar-width: none;
-        }
-        .nav-scroll::-webkit-scrollbar { display: none; }
-
-        .nav-btn {
-            background: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            padding: 6px 16px;
-            border-radius: 50px;
-            font-family: var(--font-ui);
-            font-weight: 600;
-            font-size: 0.85rem;
-            transition: 0.3s;
-        }
-
-        .nav-btn.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        /* --- الحاوية الرئيسية --- */
-        .main-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* --- تصميم البطاقة (نفس مقاس الموقع) --- */
-        .card {
-            background: var(--bg-card);
-            width: 100vw; /* عرض الشاشة بالكامل */
-            min-height: 50vh; /* كل ذكر يأخذ على الأقل نصف الشاشة */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            padding: 40px 0;
-            border-bottom: 8px solid var(--border-color); /* فاصل سميك بين الأذكار */
+            backdrop-filter: blur(10px);
+        }
+
+        .next-prayer-text { font-size: 0.9rem; opacity: 0.9; margin-bottom: 5px; }
+        .next-prayer-name { font-size: 1.8rem; font-weight: 800; }
+        
+        .countdown-timer {
+            background: var(--accent);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.4);
+        }
+
+        /* === شريط الصلوات === */
+        .prayers-bar {
+            display: flex;
+            justify-content: space-between;
+            background: var(--bg-card);
+            padding: 15px 10px;
+            border-radius: 15px;
+            margin: 20px 15px 0;
+            margin-top: -30px; /* تداخل مع الهيدر */
+            position: relative;
+            z-index: 20;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .prayer-unit {
+            text-align: center;
+            flex: 1;
             position: relative;
         }
 
-        /* منطقة النص (العمود الفقري) */
-        .content-column {
-            width: 65%; /* التحكم في عرض النص ليكون مضغوطاً */
-            min-width: 220px;
-            max-width: 400px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
+        .prayer-unit:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 0; top: 20%; height: 60%; width: 1px;
+            background: var(--border);
         }
 
-        .virtue {
+        .prayer-unit.active .p-name { color: var(--primary); font-weight: 800; }
+        .p-name { font-size: 0.75rem; color: var(--text-sec); margin-bottom: 5px; }
+        .p-time { font-size: 0.9rem; font-weight: 700; font-family: sans-serif; }
+
+        /* === زر الصوت === */
+        .audio-permission {
+            margin: 15px;
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border: 1px solid #fecaca;
+            display: none;
+        }
+
+        /* === تبويبات الأقسام === */
+        .tabs-container {
+            padding: 15px 15px 5px;
+            overflow-x: auto;
+            white-space: nowrap;
+            display: flex;
+            gap: 10px;
+            scrollbar-width: none;
+        }
+        .tabs-container::-webkit-scrollbar { display: none; }
+
+        .category-btn {
+            background: var(--bg-card);
+            color: var(--text-sec);
+            border: 1px solid var(--border);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .category-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 10px rgba(15, 118, 110, 0.3);
+        }
+
+        /* === منطقة الأذكار === */
+        .content-container {
+            flex: 1;
+            padding: 15px;
+            padding-bottom: 80px; /* مساحة للفوتر */
+        }
+
+        .thikr-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+
+        .thikr-card.completed {
+            background-color: rgba(16, 185, 129, 0.08);
+            border-color: #22c55e;
+            opacity: 0.8;
+        }
+
+        .thikr-card::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; width: 4px; height: 100%;
+            background: var(--primary);
+        }
+        .thikr-card.completed::before { background: #22c55e; }
+
+        .virtue-badge {
+            background: rgba(15, 118, 110, 0.1);
             color: var(--primary);
             font-size: 0.8rem;
-            font-weight: 800;
+            padding: 5px 10px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+        [data-theme="dark"] .virtue-badge { background: rgba(45, 212, 191, 0.15); color: #2dd4bf; }
+
+        .thikr-text {
+            font-family: 'Amiri', serif;
+            font-size: 1.4rem;
+            line-height: 1.8;
+            color: var(--text-main);
             margin-bottom: 20px;
-            background: rgba(15, 118, 110, 0.08);
-            padding: 5px 15px;
-            border-radius: 20px;
+            text-align: justify;
         }
 
-        .dhikr-text {
-            font-family: var(--font-content);
-            font-size: 1.8rem; /* خط كبير جداً وواضح */
-            line-height: 2.2; /* تباعد أسطر مريح */
-            margin-bottom: 30px;
-            font-weight: 400;
-        }
-
-        /* منطقة الأزرار */
-        .actions {
-            width: 100%;
+        .card-actions {
             display: flex;
-            flex-direction: column;
-            gap: 12px;
             align-items: center;
+            gap: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
         }
 
-        .counter {
-            font-size: 1.5rem;
+        .count-circle {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: var(--bg-app);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-weight: 800;
             color: var(--primary);
+            font-size: 1.1rem;
+            border: 2px solid var(--border);
+            flex-shrink: 0;
         }
 
-        .tap-area {
-            width: 100%;
+        .btn-tasbih {
+            flex: 1;
             background: var(--primary);
             color: white;
             border: none;
-            padding: 15px;
+            height: 50px;
             border-radius: 12px;
-            font-family: var(--font-ui);
             font-size: 1.1rem;
-            font-weight: 700;
+            font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
+        .btn-tasbih:active { transform: scale(0.97); }
+        .btn-tasbih.done { background: #22c55e; cursor: default; }
 
-        .tap-area:active {
-            transform: scale(0.98);
-        }
-
-        .card.done {
-            opacity: 0.5;
-            filter: grayscale(100%);
-        }
-        
-        .tap-area.completed {
-            background: #10b981;
-            pointer-events: none;
-            box-shadow: none;
-        }
-
-        /* شريط التقدم السفلي */
-        .progress-line {
-            position: absolute;
-            bottom: -8px; /* فوق البوردر */
-            left: 0;
-            height: 8px;
-            background: #10b981;
-            width: 0%;
-            transition: width 0.2s;
-            z-index: 2;
-        }
-
+        /* === الفوتر === */
         footer {
-            text-align: center;
-            padding: 40px 20px;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
             background: var(--bg-card);
-            border-top: 1px solid var(--border-color);
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: var(--text-sec);
+        }
+        footer span {
+            color: var(--primary);
+            font-weight: 800;
+            display: inline-block;
+            margin-top: 5px;
         }
 
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="header-title"><i class="fa-solid fa-kaaba"></i> حصن المسلم</div>
-        <button class="theme-btn" onclick="toggleTheme()"><i class="fa-solid fa-moon" id="themeIcon"></i></button>
-    </header>
+    <div id="app-frame">
+        
+        <!-- الرأس -->
+        <header>
+            <div class="header-top">
+                <div class="brand-box">
+                    <h1>حصن المسلم</h1>
+                    <span>تطوير: <b>Mahmoud Badr</b></span>
+                </div>
+                <div class="tools">
+                    <button onclick="getUserLocation()"><i class="fa-solid fa-location-crosshairs"></i></button>
+                    <button onclick="toggleAppTheme()"><i class="fa-solid fa-moon"></i></button>
+                </div>
+            </div>
 
-    <div class="nav-wrapper">
-        <div class="nav-scroll">
-            <button class="nav-btn active" onclick="loadCategory('morning', this)">الصباح</button>
-            <button class="nav-btn" onclick="loadCategory('evening', this)">المساء</button>
-            <button class="nav-btn" onclick="loadCategory('sleep', this)">النوم</button>
-            <button class="nav-btn" onclick="loadCategory('prayer', this)">الصلاة</button>
-            <button class="nav-btn" onclick="loadCategory('wudu', this)">الوضوء</button>
-            <button class="nav-btn" onclick="loadCategory('mosque', this)">المسجد</button>
-            <button class="nav-btn" onclick="loadCategory('quranic', this)">قرآنية</button>
-            <button class="nav-btn" onclick="loadCategory('prophets', this)">الأنبياء</button>
-            <button class="nav-btn" onclick="loadCategory('tasbih', this)">تسابيح</button>
+            <!-- معلومات الصلاة -->
+            <div class="prayer-info-card">
+                <div>
+                    <div class="next-prayer-text">الصلاة القادمة</div>
+                    <div class="next-prayer-name" id="nextPrayerName">--</div>
+                </div>
+                <div class="countdown-timer" id="countdownTimer">00:00:00</div>
+            </div>
+        </header>
+
+        <!-- شريط الأذان -->
+        <div class="prayers-bar">
+            <div class="prayer-unit" id="wrap-Fajr"><div class="p-name">الفجر</div><div class="p-time" id="t-Fajr">--:--</div></div>
+            <div class="prayer-unit" id="wrap-Dhuhr"><div class="p-name">الظهر</div><div class="p-time" id="t-Dhuhr">--:--</div></div>
+            <div class="prayer-unit" id="wrap-Asr"><div class="p-name">العصر</div><div class="p-time" id="t-Asr">--:--</div></div>
+            <div class="prayer-unit" id="wrap-Maghrib"><div class="p-name">المغرب</div><div class="p-time" id="t-Maghrib">--:--</div></div>
+            <div class="prayer-unit" id="wrap-Isha"><div class="p-name">العشاء</div><div class="p-time" id="t-Isha">--:--</div></div>
         </div>
+
+        <div class="audio-permission" id="audioBtn" onclick="activateAudio()">
+            <i class="fa-solid fa-volume-high"></i> اضغط هنا لتفعيل صوت الأذان
+        </div>
+
+        <!-- التنقل -->
+        <div class="tabs-container">
+            <button class="category-btn active" onclick="loadAthkar('morning', this)"><i class="fa-regular fa-sun"></i> الصباح</button>
+            <button class="category-btn" onclick="loadAthkar('evening', this)"><i class="fa-regular fa-moon"></i> المساء</button>
+            <button class="category-btn" onclick="loadAthkar('sleep', this)"><i class="fa-solid fa-bed"></i> النوم</button>
+            <button class="category-btn" onclick="loadAthkar('prayer', this)"><i class="fa-solid fa-person-praying"></i> الصلاة</button>
+            <button class="category-btn" onclick="loadAthkar('wudu', this)"><i class="fa-solid fa-droplet"></i> الوضوء</button>
+            <button class="category-btn" onclick="loadAthkar('mosque', this)"><i class="fa-solid fa-mosque"></i> المسجد</button>
+            <button class="category-btn" onclick="loadAthkar('quranic', this)"><i class="fa-solid fa-book-quran"></i> قرآنية</button>
+            <button class="category-btn" onclick="loadAthkar('prophets', this)"><i class="fa-solid fa-hands-praying"></i> الأنبياء</button>
+            <button class="category-btn" onclick="loadAthkar('tasbih', this)"><i class="fa-solid fa-fingerprint"></i> تسابيح</button>
+        </div>
+
+        <!-- المحتوى -->
+        <div class="content-container" id="athkarContainer">
+            <!-- سيتم إضافة البطاقات هنا -->
+        </div>
+
+        <!-- الفوتر -->
+        <footer>
+            <div>جميع الحقوق محفوظة © 2025</div>
+            <span>Designed & Developed by Mahmoud Badr</span>
+        </footer>
+
     </div>
 
-    <main class="main-container" id="container">
-        <!-- سيتم إدراج الأذكار هنا -->
-    </main>
-
-    <footer>
-        <p>جميع الحقوق محفوظة © 2025</p>
-        <p>تم التطوير بواسطة Mahmoud Badr</p>
-    </footer>
+    <!-- عنصر الصوت -->
+    <audio id="adhanAudio" src="https://www.islamcan.com/audio/adhan/azan1.mp3"></audio>
 
     <script>
-        // === قاعدة البيانات (نفس البيانات السابقة تماماً) ===
-        // يمكنك وضع كائن db الكامل هنا
+        // ==========================================
+        // 1. قاعدة البيانات الكاملة (بدون اختصار)
+        // ==========================================
         const db = {
             morning: [
-                { text: "أَعُوذُ بِاللهِ مِنْ الشَّيْطَانِ الرَّجِيمِ<br>اللّهُ لاَ إِلَـهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ لاَ تَأْخُذُهُ سِنَةٌ وَلاَ نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلاَّ بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلاَ يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلاَّ بِمَا شَاء ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالأَرْضَ ۖ وَلاَ يَؤُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ.", count: 1, virtue: "آية الكرسي" },
-                { text: "بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم<br>قُلْ هُوَ ٱللَّهُ أَحَدٌ، ٱللَّهُ ٱلصَّمَدُ، لَمْ يَلِدْ وَلَمْ يُولَدْ، وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌۢ.", count: 3, virtue: "الإخلاص" },
-                { text: "بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم<br>قُلْ أَعُوذُ بِرَبِّ ٱلْفَلَقِ، مِن شَرِّ مَا خَلَقَ، وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ، وَمِن شَرِّ ٱلنَّفَّٰثَٰتِ فِى ٱلْعُقَدِ، وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ.", count: 3, virtue: "الفلق" },
-                { text: "بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم<br>قُلْ أَعُوذُ بِرَبِّ ٱلنَّاسِ، مَلِكِ ٱلنَّاسِ، إِلَٰهِ ٱلنَّاسِ، مِن شَرِّ ٱلْوَسْوَاسِ ٱلْخَنَّاسِ، ٱلَّذِى يُوَسْوِسُ فِى صُدُورِ ٱلنَّاسِ، مِنَ ٱلْجِنَّةِ وَٱلنَّاسِ.", count: 3, virtue: "الناس" },
-                { text: "أَصْـبَحْنا وَأَصْـبَحَ المُـلْكُ لله وَالحَمدُ لله ، لا إلهَ إلاّ اللّهُ وَحدَهُ لا شَريكَ لهُ، لهُ المُـلكُ ولهُ الحَمْـد، وهُوَ على كلّ شَيءٍ قدير ، رَبِّ أسْـأَلُـكَ خَـيرَ ما في هـذا اليوم وَخَـيرَ ما بَعْـدَه ، وَأَعـوذُ بِكَ مِنْ شَـرِّ ما في هـذا اليوم وَشَرِّ ما بَعْـدَه، رَبِّ أَعـوذُبِكَ مِنَ الْكَسَـلِ وَسـوءِ الْكِـبَر ، رَبِّ أَعـوذُ بِكَ مِنْ عَـذابٍ في النّـارِ وَعَـذابٍ في القَـبْر.", count: 1, virtue: "أذكار الصباح" },
+                { text: "أَعُوذُ بِاللهِ مِنْ الشَّيْطَانِ الرَّجِيمِ<br>اللّهُ لاَ إِلَـهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ لاَ تَأْخُذُهُ سِنَةٌ وَلاَ نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلاَّ بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلاَ يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلاَّ بِمَا شَاء ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالأَرْضَ ۖ وَلاَ يَؤُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ.", count: 1, virtue: "آية الكرسي: أجير من الجن" },
+                { text: "بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم<br>قُلْ هُوَ ٱللَّهُ أَحَدٌ، ٱللَّهُ ٱلصَّمَدُ، لَمْ يَلِدْ وَلَمْ يُولَدْ، وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌۢ.", count: 3, virtue: "سورة الإخلاص (3 مرات)" },
+                { text: "بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم<br>قُلْ أَعُوذُ بِرَبِّ ٱلْفَلَقِ، مِن شَرِّ مَا خَلَقَ، وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ، وَمِن شَرِّ ٱلنَّفَّٰثَٰتِ فِى ٱلْعُقَدِ، وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ.", count: 3, virtue: "سورة الفلق (3 مرات)" },
+                { text: "بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم<br>قُلْ أَعُوذُ بِرَبِّ ٱلنَّاسِ، مَلِكِ ٱلنَّاسِ، إِلَٰهِ ٱلنَّاسِ، مِن شَرِّ ٱلْوَسْوَاسِ ٱلْخَنَّاسِ، ٱلَّذِى يُوَسْوِسُ فِى صُدُورِ ٱلنَّاسِ، مِنَ ٱلْجِنَّةِ وَٱلنَّاسِ.", count: 3, virtue: "سورة الناس (3 مرات)" },
+                { text: "أَصْـبَحْنا وَأَصْـبَحَ المُـلْكُ لله وَالحَمدُ لله ، لا إلهَ إلاّ اللّهُ وَحدَهُ لا شَريكَ لهُ، لهُ المُـلكُ ولهُ الحَمْـد، وهُوَ على كلّ شَيءٍ قدير ، رَبِّ أسْـأَلُـكَ خَـيرَ ما في هـذا اليوم وَخَـيرَ ما بَعْـدَه ، وَأَعـوذُ بِكَ مِنْ شَـرِّ ما في هـذا اليوم وَشَرِّ ما بَعْـدَه، رَبِّ أَعـوذُبِكَ مِنَ الْكَسَـلِ وَسـوءِ الْكِـبَر ، رَبِّ أَعـوذُ بِكَ مِنْ عَـذابٍ في النّـارِ وَعَـذابٍ في القَـبْر.", count: 1, virtue: "" },
                 { text: "اللّهـمَّ أَنْتَ رَبِّـي لا إلهَ إلاّ أَنْتَ ، خَلَقْتَنـي وَأَنا عَبْـدُك ، وَأَنا عَلـى عَهْـدِكَ وَوَعْـدِكَ ما اسْتَـطَعْـت ، أَعـوذُبِكَ مِنْ شَـرِّ ما صَنَـعْت ، أَبـوءُ لَـكَ بِنِعْـمَتِـكَ عَلَـيَّ وَأَبـوءُ بِذَنْـبي فَاغْفـِرْ لي فَإِنَّـهُ لا يَغْـفِرُ الذُّنـوبَ إِلاّ أَنْتَ.", count: 1, virtue: "سيد الاستغفار" },
-                { text: "رَضيـتُ بِاللهِ رَبَّـاً وَبِالإسْلامِ ديـناً وَبِمُحَـمَّدٍ صلى الله عليه وسلم نَبِيّـاً.", count: 3, virtue: "رضيت بالله رباً" },
-                { text: "اللّهُـمَّ إِنِّـي أَصْبَـحْتُ أُشْـهِدُك ، وَأُشْـهِدُ حَمَلَـةَ عَـرْشِـك ، وَمَلَائِكَتَكَ ، وَجَمـيعَ خَلْـقِك ، أَنَّـكَ أَنْـتَ اللهُ لا إلهَ إلاّ أَنْـتَ وَحْـدَكَ لا شَريكَ لَـك ، وَأَنَّ مُحَمّـداً عَبْـدُكَ وَرَسُولُـك.", count: 4, virtue: "العتق من النار" },
-                { text: "اللّهُـمَّ ما أَصْبَـَحَ بي مِـنْ نِعْـمَةٍ أَو بِأَحَـدٍ مِـنْ خَلْـقِك ، فَمِـنْكَ وَحْـدَكَ لا شريكَ لَـك ، فَلَـكَ الْحَمْـدُ وَلَـكَ الشُّكْـر.", count: 1, virtue: "شكر النعمة" },
-                { text: "حَسْبِـيَ اللّهُ لا إلهَ إلاّ هُوَ عَلَـيهِ تَوَكَّـلتُ وَهُوَ رَبُّ العَرْشِ العَظـيم.", count: 7, virtue: "الكفاية من الهم" },
-                { text: "بِسـمِ اللهِ الذي لا يَضُـرُّ مَعَ اسمِـهِ شَيءٌ في الأرْضِ وَلا في السّمـاءِ وَهـوَ السّمـيعُ العَلـيم.", count: 3, virtue: "الحفظ من الضر" },
+                { text: "رَضيـتُ بِاللهِ رَبَّـاً وَبِالإسْلامِ ديـناً وَبِمُحَـمَّدٍ صلى الله عليه وسلم نَبِيّـاً.", count: 3, virtue: "من قالها كان حقًا على الله أن يرضيه" },
+                { text: "اللّهُـمَّ إِنِّـي أَصْبَـحْتُ أُشْـهِدُك ، وَأُشْـهِدُ حَمَلَـةَ عَـرْشِـك ، وَمَلَائِكَتَكَ ، وَجَمـيعَ خَلْـقِك ، أَنَّـكَ أَنْـتَ اللهُ لا إلهَ إلاّ أَنْـتَ وَحْـدَكَ لا شَريكَ لَـك ، وَأَنَّ مُحَمّـداً عَبْـدُكَ وَرَسُولُـك.", count: 4, virtue: "من قالها أعتقه الله من النار" },
+                { text: "اللّهُـمَّ ما أَصْبَـَحَ بي مِـنْ نِعْـمَةٍ أَو بِأَحَـدٍ مِـنْ خَلْـقِك ، فَمِـنْكَ وَحْـدَكَ لا شريكَ لَـك ، فَلَـكَ الْحَمْـدُ وَلَـكَ الشُّكْـر.", count: 1, virtue: "أدى شكر يومه" },
+                { text: "حَسْبِـيَ اللّهُ لا إلهَ إلاّ هُوَ عَلَـيهِ تَوَكَّـلتُ وَهُوَ رَبُّ العَرْشِ العَظـيم.", count: 7, virtue: "كفاه الله ما أهمه" },
+                { text: "بِسـمِ اللهِ الذي لا يَضُـرُّ مَعَ اسمِـهِ شَيءٌ في الأرْضِ وَلا في السّمـاءِ وَهـوَ السّمـيعُ العَلـيم.", count: 3, virtue: "لم يضره شيء" },
                 { text: "اللّهُـمَّ بِكَ أَصْـبَحْنا وَبِكَ أَمْسَـينا ، وَبِكَ نَحْـيا وَبِكَ نَمُـوتُ وَإِلَـيْكَ النُّـشُور.", count: 1, virtue: "" },
                 { text: "أَصْبَـحْـنا عَلَى فِطْرَةِ الإسْلاَمِ، وَعَلَى كَلِمَةِ الإِخْلاَصِ، وَعَلَى دِينِ نَبِيِّنَا مُحَمَّدٍ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ، وَعَلَى مِلَّةِ أَبِينَا إبْرَاهِيمَ حَنِيفاً مُسْلِماً وَمَا كَانَ مِنَ المُشْرِكِينَ.", count: 1, virtue: "" },
                 { text: "سُبْحـانَ اللهِ وَبِحَمْـدِهِ عَدَدَ خَلْـقِه ، وَرِضـا نَفْسِـه ، وَزِنَـةَ عَـرْشِـه ، وَمِـدادَ كَلِمـاتِـه.", count: 3, virtue: "" },
@@ -291,23 +437,23 @@
                 { text: "أَصْبَـحْـنا وَأَصْبَـحْ المُـلكُ للهِ رَبِّ العـالَمـين ، اللّهُـمَّ إِنِّـي أسْـأَلُـكَ خَـيْرَ هـذا الـيَوْم ، فَـتْحَهُ ، وَنَصْـرَهُ ، وَنـورَهُ وَبَـرَكَتَـهُ ، وَهُـداهُ ، وَأَعـوذُ بِـكَ مِـنْ شَـرِّ ما فـيهِ وَشَـرِّ ما بَعْـدَه.", count: 1, virtue: "" },
                 { text: "اللّهُـمَّ عالِـمَ الغَـيْبِ وَالشّـهادَةِ فاطِـرَ السّماواتِ وَالأرْضِ رَبَّ كـلِّ شَـيءٍ وَمَليـكَه ، أَشْهَـدُ أَنْ لا إِلـهَ إِلاّ أَنْت ، أَعـوذُ بِكَ مِن شَـرِّ نَفْسـي وَمِن شَـرِّ الشَّيْـطانِ وَشِرْكِهِ ، وَأَنْ أَقْتَـرِفَ عَلـى نَفْسـي سوءاً أَوْ أَجُـرَّهُ إِلـى مُسْـلِم.", count: 1, virtue: "" },
                 { text: "أَعـوذُ بِكَلِمـاتِ اللّهِ التّـامّـاتِ مِنْ شَـرِّ ما خَلَـق.", count: 3, virtue: "" },
-                { text: "اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ على نَبِيِّنَا مُحمَّد.", count: 10, virtue: "الصلاة على النبي" },
+                { text: "اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ على نَبِيِّنَا مُحمَّد.", count: 10, virtue: "أدركته شفاعتي" },
                 { text: "اللَّهُمَّ إِنَّا نَعُوذُ بِكَ مِنْ أَنْ نُشْرِكَ بِكَ شَيْئًا نَعْلَمُهُ ، وَنَسْتَغْفِرُكَ لِمَا لَا نَعْلَمُهُ.", count: 3, virtue: "" },
-                { text: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ الْهَمِّ وَالْحَزَنِ، وَأَعُوذُ بِكَ مِنْ الْعَجْزِ وَالْكَسَلِ، وَأَعُوذُ بِكَ مِنْ الْجُبْنِ وَالْبُخْلِ، وَأَعُوذُ بِكَ مِنْ غَلَبَةِ الدَّيْنِ، وَقَهْرِ الرِّجَالِ.", count: 3, virtue: "دعاء الهم" },
+                { text: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ الْهَمِّ وَالْحَزَنِ، وَأَعُوذُ بِكَ مِنْ الْعَجْزِ وَالْكَسَلِ، وَأَعُوذُ بِكَ مِنْ الْجُبْنِ وَالْبُخْلِ، وَأَعُوذُ بِكَ مِنْ غَلَبَةِ الدَّيْنِ، وَقَهْرِ الرِّجَالِ.", count: 3, virtue: "دعاء الهم والحزن" },
                 { text: "أسْتَغْفِرُ اللهَ العَظِيمَ الَّذِي لاَ إلَهَ إِلاَّ هُوَ، الحَيُّ القَيُّومُ، وَأتُوبُ إلَيهِ.", count: 3, virtue: "" },
                 { text: "يَا رَبِّ , لَكَ الْحَمْدُ كَمَا يَنْبَغِي لِجَلَالِ وَجْهِكَ , وَلِعَظِيمِ سُلْطَانِكَ.", count: 3, virtue: "" },
                 { text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا طَيِّبًا، وَعَمَلًا مُتَقَبَّلًا.", count: 1, virtue: "" },
                 { text: "اللَّهُمَّ أَنْتَ رَبِّي لا إِلَهَ إِلا أَنْتَ ، عَلَيْكَ تَوَكَّلْتُ ، وَأَنْتَ رَبُّ الْعَرْشِ الْعَظِيمِ , مَا شَاءَ اللَّهُ كَانَ ، وَمَا لَمْ يَشَأْ لَمْ يَكُنْ ، وَلا حَوْلَ وَلا قُوَّةَ إِلا بِاللَّهِ الْعَلِيِّ الْعَظِيمِ , أَعْلَمُ أَنَّ اللَّهَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ ، وَأَنَّ اللَّهَ قَدْ أَحَاطَ بِكُلِّ شَيْءٍ عِلْمًا , اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ شَرِّ نَفْسِي ، وَمِنْ شَرِّ كُلِّ دَابَّةٍ أَنْتَ آخِذٌ بِنَاصِيَتِهَا ، إِنَّ رَبِّي عَلَى صِرَاطٍ مُسْتَقِيمٍ.", count: 1, virtue: "" },
                 { text: "لَا إلَه إلّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءِ قَدِيرِ.", count: 100, virtue: "" },
-                { text: "سُبْحـانَ اللهِ وَبِحَمْـدِهِ.", count: 100, virtue: "" },
+                { text: "سُبْحـانَ اللهِ وَبِحَمْـدِهِ.", count: 100, virtue: "حطت خطاياه" },
                 { text: "أسْتَغْفِرُ اللهَ وَأتُوبُ إلَيْهِ.", count: 100, virtue: "" }
             ],
             evening: [
                 { text: "أَعُوذُ بِاللهِ مِنْ الشَّيْطَانِ الرَّجِيمِ<br>اللّهُ لاَ إِلَـهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ لاَ تَأْخُذُهُ سِنَةٌ وَلاَ نَوْمٌ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الأَرْضِ مَن ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلاَّ بِإِذْنِهِ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ وَلاَ يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلاَّ بِمَا شَاء وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالأَرْضَ وَلاَ يَؤُودُهُ حِفْظُهُمَا وَهُوَ الْعَلِيُّ الْعَظِيمُ.", count: 1, virtue: "آية الكرسي" },
                 { text: "أَعُوذُ بِاللهِ مِنْ الشَّيْطَانِ الرَّجِيمِ<br>آمَنَ الرَّسُولُ بِمَا أُنْزِلَ إِلَيْهِ مِنْ رَبِّهِ وَالْمُؤْمِنُونَ ۚ كُلٌّ آمَنَ بِاللَّهِ وَمَلَائِكَتِهِ وَكُتُبِهِ وَرُسُلِهِ لَا نُفَرِّقُ بَيْنَ أَحَدٍ مِنْ رُسُلِهِ ۚ وَقَالُوا سَمِعْنَا وَأَطَعْنَا ۖ غُفْرَانَكَ رَبَّنَا وَإِلَيْكَ الْمَصِيرُ.<br>لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا لَهَا مَا كَسَبَتْ وَعَلَيْهَا مَا اكْتَسَبَتْ رَبَّنَا لَا تُؤَاخِذْنَا إِنْ نَّسِينَآ أَوْ أَخْطَأْنَا رَبَّنَا وَلَا تَحْمِلْ عَلَيْنَا إِصْرًا كَمَا حَمَلْتَهُ عَلَى الَّذِينَ مِنْ قَبْلِنَا رَبَّنَا وَلَا تُحَمِّلْنَا مَا لَا طَاقَةَ لَنَا بِهِ وَاعْفُ عَنَّا وَاغْفِرْ لَنَا وَارْحَمْنَا أَنْتَ مَوْلَانَا فَانْصُرْنَا عَلَى الْقَوْمِ الْكَافِرِينَ.", count: 1, virtue: "أواخر البقرة: كفتاه" },
-                { text: "بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم<br>قُلْ هُوَ ٱللَّهُ أَحَدٌ، ٱللَّهُ ٱلصَّمَدُ، لَمْ يَلِدْ وَلَمْ يُولَدْ، وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌۢ.", count: 3, virtue: "الإخلاص" },
-                { text: "بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم<br>قُلْ أَعُوذُ بِرَبِّ ٱلْفَلَقِ، مِن شَرِّ مَا خَلَقَ، وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ، وَمِن شَرِّ ٱلنَّفَّٰثَٰتِ فِى ٱلْعُقَدِ، وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ.", count: 3, virtue: "الفلق" },
-                { text: "بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم<br>قُلْ أَعُوذُ بِرَبِّ ٱلنَّاسِ، مَلِكِ ٱلنَّاسِ، إِلَٰهِ ٱلنَّاسِ، مِن شَرِّ ٱلْوَسْوَاسِ ٱلْخَنَّاسِ، ٱلَّذِى يُوَسْوِسُ فِى صُدُورِ ٱلنَّاسِ، مِنَ ٱلْجِنَّةِ وَٱلنَّاسِ.", count: 3, virtue: "الناس" },
+                { text: "بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم<br>قُلْ هُوَ ٱللَّهُ أَحَدٌ، ٱللَّهُ ٱلصَّمَدُ، لَمْ يَلِدْ وَلَمْ يُولَدْ، وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌۢ.", count: 3, virtue: "سورة الإخلاص (3 مرات)" },
+                { text: "بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم<br>قُلْ أَعُوذُ بِرَبِّ ٱلْفَلَقِ، مِن شَرِّ مَا خَلَقَ، وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ، وَمِن شَرِّ ٱلنَّفَّٰثَٰتِ فِى ٱلْعُقَدِ، وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ.", count: 3, virtue: "سورة الفلق (3 مرات)" },
+                { text: "بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم<br>قُلْ أَعُوذُ بِرَبِّ ٱلنَّاسِ، مَلِكِ ٱلنَّاسِ، إِلَٰهِ ٱلنَّاسِ، مِن شَرِّ ٱلْوَسْوَاسِ ٱلْخَنَّاسِ، ٱلَّذِى يُوَسْوِسُ فِى صُدُورِ ٱلنَّاسِ، مِنَ ٱلْجِنَّةِ وَٱلنَّاسِ.", count: 3, virtue: "سورة الناس (3 مرات)" },
                 { text: "أَمْسَيْـنا وَأَمْسـى المـلكُ لله وَالحَمدُ لله ، لا إلهَ إلاّ اللّهُ وَحدَهُ لا شَريكَ لهُ، لهُ المُـلكُ ولهُ الحَمْـد، وهُوَ على كلّ شَيءٍ قدير ، رَبِّ أسْـأَلُـكَ خَـيرَ ما في هـذهِ اللَّـيْلَةِ وَخَـيرَ ما بَعْـدَهـا ، وَأَعـوذُ بِكَ مِنْ شَـرِّ ما في هـذهِ اللَّـيْلةِ وَشَرِّ ما بَعْـدَهـا ، رَبِّ أَعـوذُبِكَ مِنَ الْكَسَـلِ وَسـوءِ الْكِـبَر ، رَبِّ أَعـوذُ بِكَ مِنْ عَـذابٍ في النّـارِ وَعَـذابٍ في القَـبْر.", count: 1, virtue: "أذكار المساء" },
                 { text: "اللّهـمَّ أَنْتَ رَبِّـي لا إلهَ إلاّ أَنْتَ ، خَلَقْتَنـي وَأَنا عَبْـدُك ، وَأَنا عَلـى عَهْـدِكَ وَوَعْـدِكَ ما اسْتَـطَعْـت ، أَعـوذُبِكَ مِنْ شَـرِّ ما صَنَـعْت ، أَبـوءُ لَـكَ بِنِعْـمَتِـكَ عَلَـيَّ وَأَبـوءُ بِذَنْـبي فَاغْفـِرْ لي فَإِنَّـهُ لا يَغْـفِرُ الذُّنـوبَ إِلاّ أَنْتَ .", count: 1, virtue: "سيد الاستغفار" },
                 { text: "رَضيـتُ بِاللهِ رَبَّـاً وَبِالإسْلامِ ديـناً وَبِمُحَـمَّدٍ صلى الله عليه وسلم نَبِيّـاً.", count: 3, virtue: "رضيت بالله رباً" },
@@ -394,7 +540,7 @@
                 { text: "اللَّهُمَّ حَاسِبْنِيْ حِسَابَاً يَسِيراً.", count: 1, virtue: "" },
                 { text: "اللَّهُمَّ إِنِّيْ أسْألُكَ بِأنَّ لَكَ الْحَمْدُ لَا إِلَهَ إِلَّا أنْتَ وَحْدَكَ لَا شَرِيْكَ لَكَ، الْمَنَّانُ، يَا بَدِيعَ السَّمَوَاتِ وَالْارْضِ يَا ذَا الْجَلَالِ وَالْإِكْرَامِ، يَا حَيُّ يَا قَيُّومُ إِنِّيْ أسْألُكَ الْجَنَّةَ وَأعُوْذُ بِكَ مِنَ النَّارِ.", count: 1, virtue: "" },
                 { text: "اللَّهُمَّ إِنِّيْ أسْألُكَ بِأنَّيْ أشْهَدُ أنَّكَ أنْتَ اللهُ لَا إِلَهَ إِلَّا أنْتَ الْأحَدُ الصَّمَدُ الَّذِيْ لَمْ يَلِدْ وَلَمْ يُوْلَدْ وَلَمْ يَكُنْ لَهُ كُفُوًا أحَدٌ.", count: 1, virtue: "" },
-                { text: "اللَّهُمَّ بِعِلْمِكَ الغَيْبَ وَقُدْرَتِكَ عَلَى الْخَلْقِ أحْيِنِيْ مَا عَلِمْتَ الْحَيَاةَ خَيْرًا لِيْ، وَتَوَفَّنِيْ إِذَا عَلِمْتَ الْوَفَاةَ خَيْرًا لِيْ، اللهم إِنِّيْ أسْألُكَ خَشْيَتَكَ فِيْ الْغَيْبِ وَالشَّهَادَةِ، وَأسْألُكَ كَلِمَةَ الْحَقِّ فِي الرِّضَا وَالْغَضَبِ، وَأسْألُكَ كَلِمَةَ الْحَقِّ فِي الرِّضَا وَالْغَضَبِ، وَأسْألُكَ الْقَصْدَ فِيْ الْغِنَى وَالْفَقْرِ، وَأسْألُكَ نَعِيْمًا لَا يَنْفَدُ، وَأسْألُكَ قُرَّةَ عَيْنٍ لَا تَنْقَطِعُ، وَأسْألُكَ الرِّضَا بَعْدَ الْقَضَاءِ، وَأسْألُكَ بَرْدَ الْعَيْشِ بَعْدَ الْمَوْتِ، وَأسْألُكَ لَذَّةَ النَّظَرِ إِلَى وَجْهِكَ، وَالشَّوْقَ إِلَى لِقائِكَ فِيْ غَيْرِ ضَرَّاءَ مُضِرَّةٍ، وَلَا فِتْنَةٍ مُضِلَّةٍ، اللهم زَيِّنَّا بِزِينَةِ الْإِيْمَانِ، وَاجْعَلْنَا هُدَاةً مُهْتَدِيْنَ.", count: 1, virtue: "" },
+                { text: "اللَّهُمَّ بِعِلْمِكَ الغَيْبَ وَقُدْرَتِكَ عَلَى الْخَلْقِ أحْيِنِيْ مَا عَلِمْتَ الْحَيَاةَ خَيْرًا لِيْ، وَتَوَفَّنِيْ إِذَا عَلِمْتَ الْوَفَاةَ خَيْرًا لِيْ، اللهم إِنِّيْ أسْألُكَ خَشْيَتَكَ فِيْ الْغَيْبِ وَالشَّهَادَةِ، وَأسْألُكَ كَلِمَةَ الْحَقِّ فِي الرِّضَا وَالْغَضَبِ، وَأسْألُكَ الْقَصْدَ فِيْ الْغِنَى وَالْفَقْرِ، وَأسْألُكَ نَعِيْمًا لَا يَنْفَدُ، وَأسْألُكَ قُرَّةَ عَيْنٍ لَا تَنْقَطِعُ، وَأسْألُكَ الرِّضَا بَعْدَ الْقَضَاءِ، وَأسْألُكَ بَرْدَ الْعَيْشِ بَعْدَ الْمَوْتِ، وَأسْألُكَ لَذَّةَ النَّظَرِ إِلَى وَجْهِكَ، وَالشَّوْقَ إِلَى لِقائِكَ فِيْ غَيْرِ ضَرَّاءَ مُضِرَّةٍ، وَلَا فِتْنَةٍ مُضِلَّةٍ، اللهم زَيِّنَّا بِزِينَةِ الْإِيْمَانِ، وَاجْعَلْنَا هُدَاةً مُهْتَدِيْنَ.", count: 1, virtue: "" },
                 { text: "اللَّهُمَّ اهْدِني فيمَنْ هدَيْت، وعَافِنِي فيمَنْ عافيتَ، وتَوَلَّني فيمن تَولَّيت، وبارِك لي فيمَا أعطيت، وقِني شرَّ ما قَضَيْت، فإنَّك تقضي ولا يُقْضَى عَليك، إنَّه لا يَذلُّ من واليت، تباركت ربنا وتعاليت.", count: 1, virtue: "دعاء القنوت" },
                 { text: "اللَّهُمَّ إني أعُوذُ بِرضَاك من سَخَطِك وأعُوذُ بمُعافاتك مِنْ عُقوبَتِك، وأعُوذُ بِكَ مِنْكَ لا أُحْصِي ثناءً عليكَ، أنْتَ كما أثنيت على نفسك.", count: 1, virtue: "" },
                 { text: "اللَّهُمَّ إيَّاك نعبُدُ، ولك نُصلِّي ونسجُدُ، وإليك نسعَى ونَحْفِد، نرجُو رحمتك، ونخشى عذابَكَ، إنَّ عذابَكَ بالكافرين مُلْحِقٌ، اللَّهُمَّ إنَّا نستعينُكَ، ونستغفرك، ونُثْنِي عليكَ الخيرَ، ولا نَكْفُرُك، ونُؤمِنُ بِكَ ونَخْضَعُ لَك، ونَخْلَعُ من يكفُرُك.", count: 1, virtue: "" },
@@ -482,90 +628,207 @@
             ]
         };
 
-        const container = document.getElementById('container');
+        // ==========================================
+        // 2. منطق التطبيق (الجافاسكريبت)
+        // ==========================================
+        let prayerTimings = {};
+        let adhanEnabled = false;
 
-        // إدارة الوضع الليلي
-        function toggleTheme() {
-            const current = document.body.getAttribute('data-theme');
-            const isDark = current === 'dark';
+        // --- تحديد الموقع والصلوات ---
+        function getUserLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    fetchPrayers(position.coords.latitude, position.coords.longitude);
+                }, error => {
+                    // افتراضي القاهرة
+                    fetchPrayers(30.0444, 31.2357);
+                    alert("تعذر تحديد الموقع، تم استخدام توقيت القاهرة افتراضياً.");
+                });
+            } else {
+                fetchPrayers(30.0444, 31.2357);
+            }
+        }
+
+        async function fetchPrayers(lat, lng) {
+            try {
+                const date = new Date();
+                const apiURL = `https://api.aladhan.com/v1/timings/${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}?latitude=${lat}&longitude=${lng}&method=5`;
+                const response = await fetch(apiURL);
+                const data = await response.json();
+                
+                if (data.code === 200) {
+                    prayerTimings = data.data.timings;
+                    updatePrayerDisplay();
+                    document.getElementById('audioBtn').style.display = 'block';
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function updatePrayerDisplay() {
+            const keys = {Fajr:'الفجر', Dhuhr:'الظهر', Asr:'العصر', Maghrib:'المغرب', Isha:'العشاء'};
+            for (let key in keys) {
+                const el = document.getElementById(`t-${key}`);
+                if (el) el.innerText = convertTo12Hour(prayerTimings[key]);
+            }
+            startPrayerCountdown();
+        }
+
+        function convertTo12Hour(time24) {
+            let [h, m] = time24.split(':');
+            let suffix = h >= 12 ? 'م' : 'ص';
+            h = h % 12 || 12;
+            return `${h}:${m}`;
+        }
+
+        let timerInterval;
+        function startPrayerCountdown() {
+            if(timerInterval) clearInterval(timerInterval);
             
-            document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
-            document.getElementById('themeIcon').className = isDark ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
-            localStorage.setItem('theme', isDark ? 'light' : 'dark');
+            timerInterval = setInterval(() => {
+                const now = new Date();
+                const prayerOrder = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+                let nextPrayerTime = null;
+                let nextPrayerName = '';
+
+                for (let p of prayerOrder) {
+                    const [h, m] = prayerTimings[p].split(':');
+                    const pDate = new Date();
+                    pDate.setHours(h, m, 0);
+                    
+                    if (pDate > now) {
+                        nextPrayerTime = pDate;
+                        nextPrayerName = p;
+                        break;
+                    }
+                }
+
+                // إذا انتهت صلوات اليوم، الفجر هو التالي غداً
+                if (!nextPrayerTime) {
+                    const [h, m] = prayerTimings['Fajr'].split(':');
+                    nextPrayerTime = new Date();
+                    nextPrayerTime.setDate(nextPrayerTime.getDate() + 1);
+                    nextPrayerTime.setHours(h, m, 0);
+                    nextPrayerName = 'Fajr';
+                }
+
+                // تحديث الواجهة
+                const arNames = {Fajr:'الفجر', Dhuhr:'الظهر', Asr:'العصر', Maghrib:'المغرب', Isha:'العشاء'};
+                document.getElementById('nextPrayerName').innerText = arNames[nextPrayerName];
+
+                // تمييز الصلاة النشطة
+                document.querySelectorAll('.prayer-unit').forEach(u => u.classList.remove('active'));
+                const activeUnit = document.getElementById(`wrap-${nextPrayerName}`);
+                if(activeUnit) activeUnit.classList.add('active');
+
+                // العداد التنازلي
+                const diff = nextPrayerTime - now;
+                
+                if (diff <= 0) {
+                    document.getElementById('countdownTimer').innerText = "00:00:00";
+                    if (adhanEnabled) {
+                        const audio = document.getElementById('adhanAudio');
+                        audio.play();
+                        adhanEnabled = false; // تشغيل مرة واحدة ثم إعادة الطلب لمنع الإزعاج
+                        document.getElementById('audioBtn').style.display = 'block';
+                    }
+                    getUserLocation(); // تحديث لليوم التالي
+                } else {
+                    const h = Math.floor(diff / 3600000);
+                    const m = Math.floor((diff % 3600000) / 60000);
+                    const s = Math.floor((diff % 60000) / 1000);
+                    document.getElementById('countdownTimer').innerText = 
+                        `${h}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+                }
+
+            }, 1000);
         }
 
-        // استعادة الوضع
-        if(localStorage.getItem('theme') === 'dark') {
-            toggleTheme();
+        function activateAudio() {
+            const audio = document.getElementById('adhanAudio');
+            audio.play().then(() => {
+                audio.pause();
+                audio.currentTime = 0;
+                adhanEnabled = true;
+                document.getElementById('audioBtn').style.display = 'none';
+                alert("تم تفعيل الأذان بنجاح. يرجى إبقاء التطبيق مفتوحاً.");
+            });
         }
 
-        // تحميل الأقسام
-        function loadCategory(key, btn) {
+        // --- منطق الأذكار ---
+        function loadAthkar(cat, btnElement) {
             // تحديث الأزرار
-            if(btn) {
-                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
+            if(btnElement) {
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                btnElement.classList.add('active');
             }
 
+            const container = document.getElementById('athkarContainer');
             container.innerHTML = '';
             
-            if(db[key]) {
-                db[key].forEach((item, index) => {
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    card.id = `card-${index}`;
+            const list = db[cat] || db['morning'];
 
-                    const virtueHtml = item.virtue ? `<div class="virtue">${item.virtue}</div>` : '';
-                    
-                    card.innerHTML = `
-                        <div class="content-column">
-                            ${virtueHtml}
-                            <div class="dhikr-text">${item.text}</div>
-                            <div class="actions">
-                                <div class="counter" id="cnt-${index}">0 / ${item.count}</div>
-                                <button class="tap-area" id="btn-${index}" onclick="handleTap(${index}, ${item.count})">
-                                    اضغط للتسبيح
-                                </button>
-                            </div>
-                        </div>
-                        <div class="progress-line" id="prog-${index}"></div>
-                    `;
-                    container.appendChild(card);
-                });
-            }
-            window.scrollTo({ top: 0, behavior: 'auto' });
+            list.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'thikr-card';
+                card.id = `card-${index}`;
+                
+                const virtueHTML = item.virtue ? `<div class="virtue-badge">${item.virtue}</div>` : '';
+                
+                card.innerHTML = `
+                    ${virtueHTML}
+                    <div class="thikr-text">${item.text}</div>
+                    <div class="card-actions">
+                        <div class="count-circle" id="progress-${index}">0/${item.count}</div>
+                        <button class="btn-tasbih" onclick="incrementCount(this, ${item.count}, ${index})">
+                            <i class="fa-solid fa-fingerprint"></i> اضغط للتسبيح
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
         }
 
-        // التعامل مع الضغط
-        function handleTap(index, max) {
-            const countElem = document.getElementById(`cnt-${index}`);
-            const btn = document.getElementById(`btn-${index}`);
-            const prog = document.getElementById(`prog-${index}`);
+        function incrementCount(btn, target, index) {
+            const progress = document.getElementById(`progress-${index}`);
             const card = document.getElementById(`card-${index}`);
-            
-            let current = parseInt(countElem.innerText.split('/')[0]);
-            
-            if(current < max) {
+            let current = parseInt(progress.innerText.split('/')[0]);
+
+            if (current < target) {
                 current++;
-                countElem.innerText = `${current} / ${max}`;
+                progress.innerText = `${current}/${target}`;
                 
-                // تحديث الخط الأخضر
-                prog.style.width = `${(current / max) * 100}%`;
+                // اهتزاز
+                if (navigator.vibrate) navigator.vibrate(30);
 
-                // اهتزاز خفيف
-                if(navigator.vibrate) navigator.vibrate(30);
-
-                if(current === max) {
-                    btn.innerHTML = '<i class="fa-solid fa-check"></i> أحسنت!';
-                    btn.classList.add('completed');
-                    card.classList.add('done');
-                    if(navigator.vibrate) navigator.vibrate([50, 50, 50]);
+                if (current === target) {
+                    btn.classList.add('done');
+                    btn.innerHTML = '<i class="fa-solid fa-check"></i> أحسنت';
+                    card.classList.add('completed');
+                    if (navigator.vibrate) navigator.vibrate([50, 50, 50]);
                 }
             }
         }
 
-        // التشغيل التلقائي
-        window.onload = () => loadCategory('morning');
+        // --- الوضع الليلي ---
+        function toggleAppTheme() {
+            const body = document.body;
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // --- التهيئة عند البدء ---
+        window.onload = () => {
+            if(localStorage.getItem('theme') === 'dark') document.body.setAttribute('data-theme', 'dark');
+            getUserLocation();
+            loadAthkar('morning', document.querySelector('.category-btn'));
+        };
 
     </script>
 </body>
