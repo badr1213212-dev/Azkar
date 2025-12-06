@@ -271,7 +271,7 @@
 
     <footer>
         <p>جميع الحقوق محفوظة © 2025</p>
-        <p>تصميم وبرمجة <strong>Mahmoud Badr</strong></p>
+        <p>تصميم وتطوير <strong>Mahmoud Badr</strong></p>
     </footer>
 
     <script>
