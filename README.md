@@ -2,12 +2,10 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <!-- إعدادات العرض الصارمة للموبايل: تمنع التصغير والتكبير وتجبر المتصفح على استخدام العرض الكامل -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0f766e">
     <title>حصن المسلم</title>
     
-    <!-- الخطوط والأيقونات -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -27,7 +25,7 @@
 
         [data-theme="dark"] {
             --primary: #2dd4bf;
-            --bg-body: #000000; /* خلفية سوداء تماماً للموبايل في الوضع الليلي */
+            --bg-body: #000000;
             --bg-card: #111827;
             --text-main: #f9fafb;
             --text-secondary: #9ca3af;
@@ -45,11 +43,11 @@
             font-family: var(--font-main);
             background-color: var(--bg-body);
             color: var(--text-main);
-            overflow-x: hidden; /* منع الحركة الأفقية */
+            overflow-x: hidden;
             width: 100%;
         }
 
-        /* --- الهيدر الثابت --- */
+        /* --- الهيدر --- */
         header {
             background: var(--primary);
             color: white;
@@ -60,8 +58,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             height: 60px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .header-title {
@@ -80,12 +78,12 @@
             padding: 5px;
         }
 
-        /* --- شريط الأقسام (Scrollable) --- */
+        /* --- شريط التنقل --- */
         .nav-container {
             background: var(--bg-card);
             border-bottom: 1px solid var(--border-color);
             position: sticky;
-            top: 60px; /* تحت الهيدر مباشرة */
+            top: 60px;
             z-index: 900;
             padding: 10px 0;
             width: 100%;
@@ -95,8 +93,8 @@
             display: flex;
             overflow-x: auto;
             gap: 10px;
-            padding: 0 15px; /* مسافة بادئة للأزرار */
-            scrollbar-width: none; /* إخفاء شريط التمرير */
+            padding: 0 15px;
+            scrollbar-width: none;
         }
         .nav-scroll::-webkit-scrollbar { display: none; }
 
@@ -110,7 +108,6 @@
             font-weight: 600;
             font-size: 0.9rem;
             white-space: nowrap;
-            transition: all 0.2s;
         }
 
         .nav-btn.active {
@@ -119,99 +116,87 @@
             border-color: var(--primary);
         }
 
-        /* --- حاوية الأذكار --- */
+        /* --- المحتوى --- */
         .main-content {
-            width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 8px; /* مسافة بسيطة جداً بين البطاقات */
-            padding-bottom: 50px;
+            width: 100%;
         }
 
-        /* --- تصميم البطاقة (Edge to Edge) --- */
+        /* --- البطاقة --- */
         .card {
             background: var(--bg-card);
-            width: 100%; /* عرض كامل */
-            padding: 20px 15px; /* حشوة داخلية للنص حتى لا يلتصق بالحافة */
-            border-bottom: 1px solid var(--border-color); /* فاصل خطي بدلاً من الظل */
+            width: 100%;
+            padding: 30px 0; /* زيادة المساحة الرأسية */
+            border-bottom: 1px solid var(--border-color);
             position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* توسيط المحتوى */
         }
 
         .virtue-badge {
-            display: inline-block;
             background: rgba(15, 118, 110, 0.1);
             color: var(--primary);
             font-size: 0.8rem;
             font-weight: 700;
-            padding: 4px 8px;
-            border-radius: 4px;
-            margin-bottom: 12px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 15px;
         }
 
+        /* === التعديل الجوهري لضغط النص === */
         .dhikr-text {
             font-family: var(--font-quran);
-            font-size: 1.5rem; /* حجم خط كبير وواضح */
-            line-height: 1.8;
-            text-align: justify;
-            margin-bottom: 20px;
+            font-size: 1.7rem; /* خط كبير */
+            line-height: 2.2; /* تباعد أسطر كبير للقراءة المريحة */
+            
+            /* هذا ما يجعله نصف العرض ويجبره على الطول */
+            width: 60%; 
+            min-width: 200px; /* لضمان عدم الصغر الشديد */
+            text-align: center; /* التوسيط يبدو أجمل في العمود الضيق */
+            
+            margin-bottom: 25px;
+            color: var(--text-main);
         }
 
-        /* منطقة التفاعل (العداد والزر) */
+        /* منطقة التفاعل */
         .interaction-area {
+            width: 60%; /* نفس عرض النص */
+            min-width: 200px;
             display: flex;
-            align-items: center;
+            flex-direction: column; /* الأزرار تحت بعضها */
             gap: 10px;
-            margin-top: 10px;
+            align-items: center;
         }
 
-        .counter-circle {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--bg-body);
-            border: 2px solid var(--primary);
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .counter-display {
             font-weight: 800;
-            font-size: 1.1rem;
-            flex-shrink: 0;
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 5px;
         }
 
         .tap-btn {
-            flex: 1; /* الزر يأخذ باقي المساحة */
             background: var(--primary);
             color: white;
             border: none;
-            height: 50px;
-            border-radius: 8px;
+            width: 100%; /* عرض كامل المساحة المتاحة (التي هي 60%) */
+            padding: 12px;
+            border-radius: 12px;
             font-family: var(--font-main);
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
             cursor: pointer;
-            user-select: none; /* منع تحديد النص عند النقر السريع */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        .tap-btn:active {
-            transform: scale(0.98);
-        }
+        .tap-btn:active { transform: scale(0.97); }
 
-        .card.done {
-            opacity: 0.6;
-            background-color: var(--bg-body);
-        }
-        
-        .tap-btn.completed {
-            background-color: #10b981;
-            pointer-events: none;
-        }
+        .card.done { opacity: 0.5; background: var(--bg-body); }
+        .tap-btn.completed { background: #10b981; pointer-events: none; }
 
-        /* --- شريط التقدم أسفل البطاقة --- */
+        /* شريط التقدم */
         .progress-bar {
             position: absolute;
             bottom: 0;
@@ -219,34 +204,25 @@
             height: 4px;
             background: #10b981;
             width: 0%;
-            transition: width 0.2s ease;
+            transition: width 0.2s;
         }
-
+        
         footer {
             text-align: center;
-            padding: 20px;
-            color: var(--text-secondary);
+            padding: 30px;
             font-size: 0.8rem;
+            color: var(--text-secondary);
             background: var(--bg-card);
-            border-top: 1px solid var(--border-color);
         }
-
     </style>
 </head>
 <body>
 
-    <!-- الهيدر -->
     <header>
-        <div class="header-title">
-            <i class="fa-solid fa-kaaba"></i>
-            حصن المسلم
-        </div>
-        <button class="theme-toggle" onclick="toggleMode()">
-            <i class="fa-solid fa-moon" id="modeIcon"></i>
-        </button>
+        <div class="header-title"><i class="fa-solid fa-kaaba"></i> حصن المسلم</div>
+        <button class="theme-toggle" onclick="toggleMode()"><i class="fa-solid fa-moon" id="modeIcon"></i></button>
     </header>
 
-    <!-- التنقل -->
     <div class="nav-container">
         <div class="nav-scroll">
             <button class="nav-btn active" onclick="loadDhikr('morning', this)">الصباح</button>
@@ -260,21 +236,17 @@
         </div>
     </div>
 
-    <!-- المحتوى الرئيسي -->
     <main class="main-content" id="listContainer">
-        <!-- هنا تظهر الأذكار -->
+        <!-- المحتوى -->
     </main>
 
-    <footer>
-        <p>تطوير: Mahmoud Badr © 2025</p>
-    </footer>
+    <footer><p>تطوير: Mahmoud Badr © 2025</p></footer>
 
     <script>
-        // === البيانات (مختصرة للعرض، الكود يعمل مع البيانات الكاملة إذا أضفتها) ===
-        // يمكنك نسخ كائن db الكامل من الكود السابق ولصقه هنا
-        const db = {
-             morning: [
-                { text: "أَعُوذُ بِاللهِ مِنْ الشَّيْطَانِ الرَّجِيمِ<br>اللّهُ لاَ إِلَـهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ لاَ تَأْخُذُهُ سِنَةٌ وَلاَ نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلاَّ بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلاَ يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلاَّ بِمَا شَاء ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالأَرْضَ ۖ وَلاَ يَؤُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ.", count: 1, virtue: "آية الكرسي: أجير من الجن" },
+        // === نفس قاعدة البيانات السابقة ===
+         const db = {
+            morning: [
+                { text: "أَعُوذُ بِاللهِ مِنْ الشَّيْطَانِ الرَّجِيمِ<br>اللّهُ لاَ إِلَـهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ لاَ تَأْخُذُهُ سِنَةٌ وَلاَ نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلاَّ بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلاَ يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلاَّ بِمَا شَاء ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالأَرْضَ ۖ وَلاَ يَؤُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ.", count: 1, virtue: "آية الكرسي" },
                 { text: "بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم<br>قُلْ هُوَ ٱللَّهُ أَحَدٌ، ٱللَّهُ ٱلصَّمَدُ، لَمْ يَلِدْ وَلَمْ يُولَدْ، وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌۢ.", count: 3, virtue: "الإخلاص" },
                 { text: "بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم<br>قُلْ أَعُوذُ بِرَبِّ ٱلْفَلَقِ، مِن شَرِّ مَا خَلَقَ، وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ، وَمِن شَرِّ ٱلنَّفَّٰثَٰتِ فِى ٱلْعُقَدِ، وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ.", count: 3, virtue: "الفلق" },
                 { text: "بِسْمِ اللهِ الرَّحْمنِ الرَّحِيم<br>قُلْ أَعُوذُ بِرَبِّ ٱلنَّاسِ، مَلِكِ ٱلنَّاسِ، إِلَٰهِ ٱلنَّاسِ، مِن شَرِّ ٱلْوَسْوَاسِ ٱلْخَنَّاسِ، ٱلَّذِى يُوَسْوِسُ فِى صُدُورِ ٱلنَّاسِ، مِنَ ٱلْجِنَّةِ وَٱلنَّاسِ.", count: 3, virtue: "الناس" },
@@ -501,7 +473,6 @@
 
         // تحميل الأذكار
         function loadDhikr(type, btn) {
-            // تحديث الأزرار
             if(btn) {
                 document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
@@ -521,7 +492,7 @@
                         ${virtueHtml}
                         <div class="dhikr-text">${item.text}</div>
                         <div class="interaction-area">
-                            <div class="counter-circle" id="cnt-${index}">0/${item.count}</div>
+                            <div class="counter-display" id="cnt-${index}">0/${item.count}</div>
                             <button class="tap-btn" id="btn-${index}" onclick="countUp(${index}, ${item.count})">
                                 اضغط للتسبيح <i class="fa-solid fa-fingerprint"></i>
                             </button>
@@ -534,7 +505,6 @@
             window.scrollTo(0, 0);
         }
 
-        // عداد التسبيح
         function countUp(idx, max) {
             const counter = document.getElementById(`cnt-${idx}`);
             const btn = document.getElementById(`btn-${idx}`);
@@ -547,11 +517,9 @@
                 current++;
                 counter.innerText = `${current}/${max}`;
                 
-                // تحديث شريط التقدم
                 const percent = (current / max) * 100;
                 bar.style.width = `${percent}%`;
 
-                // اهتزاز خفيف
                 if(navigator.vibrate) navigator.vibrate(30);
 
                 if(current === max) {
@@ -563,7 +531,6 @@
             }
         }
 
-        // التشغيل التلقائي
         window.onload = () => loadDhikr('morning');
 
     </script>
